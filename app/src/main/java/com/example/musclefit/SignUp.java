@@ -46,6 +46,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email, pass, name;
+                dialog.show();
 
                 name = binding.fullName.getText().toString().trim();
                 email = binding.emailAddress.getText().toString().trim();
@@ -54,6 +55,7 @@ public class SignUp extends AppCompatActivity {
                 auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        dialog.dismiss();
                         if (task.isSuccessful()){
                             Intent i = new Intent(getApplicationContext(), Dashboard.class);
                             startActivity(i);
