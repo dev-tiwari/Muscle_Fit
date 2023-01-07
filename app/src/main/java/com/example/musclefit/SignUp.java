@@ -45,27 +45,36 @@ public class SignUp extends AppCompatActivity {
         binding.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email, pass, name;
-                dialog.show();
+                String email, pass, name, confirmPass;
 
                 name = binding.fullName.getText().toString().trim();
                 email = binding.emailAddress.getText().toString().trim();
                 pass = binding.password.getText().toString().trim();
+                confirmPass = binding.confirmPassword.getText().toString().trim();
 
-                auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        dialog.dismiss();
-                        if (task.isSuccessful()){
-                            Intent i = new Intent(getApplicationContext(), Dashboard.class);
-                            startActivity(i);
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                if (email.isEmpty()) {
+                    binding.emailAddress.setError("This field cannot be empty.");
+                } else if (pass.isEmpty() || pass.length() < 6) {
+                    binding.password.setError("Password Length Should Exceed 6 Characters!");
+                }else if (confirmPass.isEmpty() || confirmPass.length() < 6 ) {
+                    binding.confirmPassword.setError("Password Length Should Exceed 6 Characters!");
+                }else if (!confirmPass.equals(pass)) {
+                    binding.confirmPassword.setError("Password does not Match!");
+                } else {
+                    auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            dialog.dismiss();
+                            if (task.isSuccessful()) {
+                                Intent i = new Intent(getApplicationContext(), Dashboard.class);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-
+                    });
+                }
             }
         });
 
