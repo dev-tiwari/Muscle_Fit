@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -63,10 +64,7 @@ public class SignIn extends AppCompatActivity {
                 } else if (pass.isEmpty() || pass.length() < 6) {
                     binding.signInPassword.setError("Password Length Should Exceed 6 Characters!");
                 } else {
-
                     dialog.show();
-
-//                    if (auth.getCurrentUser().isEmailVerified()) {
                     auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

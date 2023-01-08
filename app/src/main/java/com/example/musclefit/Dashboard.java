@@ -8,13 +8,19 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.musclefit.databinding.ActivityDashboardBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Objects;
 
 public class Dashboard extends AppCompatActivity {
 
     ActivityDashboardBinding binding;
     FirebaseAuth auth;
     ProgressDialog dialog;
+    FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,25 @@ public class Dashboard extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         dialog = new ProgressDialog(this);
         dialog.setMessage("Just a Minute...");
+        database = FirebaseFirestore.getInstance();
+
+        dialog.show();
+
+        String uid = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+        database
+                .collection("users")
+                .document(uid)
+                .get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                User user = documentSnapshot.toObject(User.class);
+                                binding.profileName1.setText(user.getName());
+                                binding.profileName.setText(user.getName());
+                                binding.profileEmailAddress.setText(user.getEmail());
+                                dialog.dismiss();
+                            }
+                        });
 
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,6 +56,14 @@ public class Dashboard extends AppCompatActivity {
                 dialog.show();
                 auth.signOut();
                 startActivity(new Intent(getApplicationContext(), StartPanel.class));
+                finish();
+            }
+        });
+        binding.refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Dashboard.class);
+                startActivity(i);
                 finish();
             }
         });
