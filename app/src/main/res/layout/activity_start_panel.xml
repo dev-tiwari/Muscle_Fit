@@ -33,6 +33,7 @@
 
     <Button
         android:id="@+id/signinbutton"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -49,6 +50,7 @@
 
     <Button
         android:id="@+id/signupbutton"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

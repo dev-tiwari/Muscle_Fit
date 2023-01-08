@@ -43,27 +43,19 @@ public class Dashboard extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 User user = documentSnapshot.toObject(User.class);
-                                binding.profileName1.setText(user.getName());
+
                                 binding.profileName.setText(user.getName());
-                                binding.profileEmailAddress.setText(user.getEmail());
+
                                 dialog.dismiss();
                             }
                         });
 
-        binding.button.setOnClickListener(new View.OnClickListener() {
+        binding.elevatedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
                 auth.signOut();
                 startActivity(new Intent(getApplicationContext(), StartPanel.class));
-                finish();
-            }
-        });
-        binding.refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Dashboard.class);
-                startActivity(i);
                 finish();
             }
         });

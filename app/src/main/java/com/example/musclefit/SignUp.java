@@ -59,7 +59,9 @@ public class SignUp extends AppCompatActivity {
                 pass = binding.password.getText().toString().trim();
                 confirmPass = binding.confirmPassword.getText().toString().trim();
 
-                if (email.isEmpty()) {
+                if (name.isEmpty()) {
+                    binding.fullName.setError("This field cannot be empty.");
+                } else if (email.isEmpty()) {
                     binding.emailAddress.setError("This field cannot be empty.");
                 } else if (pass.isEmpty() || pass.length() < 6) {
                     binding.password.setError("Password Length Should Exceed 6 Characters!");
