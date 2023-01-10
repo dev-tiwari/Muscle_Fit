@@ -4,10 +4,6 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private String height;
-    private String weight;
-    private int age;
-    private String BMI;
 
     public String getName() {
         return name;
@@ -41,12 +37,4 @@ public class User {
 
     public User() {
     }
-
-    public User(String height, String weight, int age, String BMI) {
-        this.height = height;
-        this.weight = weight;
-        this.age = age;
-        this.BMI = BMI;
-    }
-
 }
