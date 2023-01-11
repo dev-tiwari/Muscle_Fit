@@ -31,7 +31,9 @@ public class SomeMoreInformation extends AppCompatActivity {
     ProgressDialog dialog;
     private String gender;
     private String height, weight, age, BMI;
-    private String name, email, pass;
+    float h, w;
+    float heightinm, doub;
+    float bmi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +49,6 @@ public class SomeMoreInformation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.show();
-                float h, w;
-                float heightinm, doub;
-                float bmi;
                 height = Objects.requireNonNull(binding.height.getEditText()).getText().toString().trim();
                 weight = Objects.requireNonNull(binding.weight.getEditText()).getText().toString().trim();
                 age = Objects.requireNonNull(binding.age.getEditText()).getText().toString().trim();
@@ -64,42 +63,6 @@ public class SomeMoreInformation extends AppCompatActivity {
                     dialog.dismiss();
                     binding.age.setError("This Field Cannot be Empty.");
                 } else {
-                    h = Float.parseFloat(height);
-                    w = Float.parseFloat(weight);
-                    heightinm = h / 100f;
-                    doub = heightinm * heightinm;
-                    BMI = String.valueOf(w/doub);
-                    bmi = Float.parseFloat(BMI);
-
-                    binding.textView8.setVisibility(View.VISIBLE);
-                    binding.textView9.setText(BMI);
-                    binding.textView9.setVisibility(View.VISIBLE);
-
-                    if (bmi < 16) {
-                        binding.textView10.setText("Severe Thinness");
-                        binding.textView10.setVisibility(View.VISIBLE);
-                    } else if (bmi >= 16 && bmi < 17) {
-                        binding.textView10.setText("Moderate Thinness");
-                        binding.textView10.setVisibility(View.VISIBLE);
-                    } else if (bmi >= 17 && bmi < 18.5) {
-                        binding.textView10.setText("Mild Thinness");
-                        binding.textView10.setVisibility(View.VISIBLE);
-                    } else if (bmi >= 18.5 && bmi < 25) {
-                        binding.textView10.setText("Normal");
-                        binding.textView10.setVisibility(View.VISIBLE);
-                    } else if (bmi >= 25 && bmi < 30) {
-                        binding.textView10.setText("Overweight");
-                        binding.textView10.setVisibility(View.VISIBLE);
-                    } else if (bmi >= 30 && bmi < 35) {
-                        binding.textView10.setText("Obese Class I");
-                        binding.textView10.setVisibility(View.VISIBLE);
-                    } else if (bmi >= 35 && bmi < 40) {
-                        binding.textView10.setText("Obese Class II");
-                        binding.textView10.setVisibility(View.VISIBLE);
-                    } else if (bmi >= 40) {
-                        binding.textView10.setText("Obese Class III");
-                        binding.textView10.setVisibility(View.VISIBLE);
-                    }
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -107,6 +70,43 @@ public class SomeMoreInformation extends AppCompatActivity {
                             binding.continueButton.setVisibility(View.VISIBLE);
                             binding.textView11.setVisibility(View.VISIBLE);
                             binding.toggleButton.setVisibility(View.VISIBLE);
+                            h = Float.parseFloat(height);
+                            w = Float.parseFloat(weight);
+                            heightinm = h / 100f;
+                            doub = heightinm * heightinm;
+                            BMI = String.valueOf(w/doub);
+                            bmi = Float.parseFloat(BMI);
+
+                            binding.textView8.setVisibility(View.VISIBLE);
+                            binding.textView9.setText(BMI);
+                            binding.textView9.setVisibility(View.VISIBLE);
+
+                            if (bmi < 16) {
+                                binding.textView10.setText("Severe Thinness");
+                                binding.textView10.setVisibility(View.VISIBLE);
+                            } else if (bmi >= 16 && bmi < 17) {
+                                binding.textView10.setText("Moderate Thinness");
+                                binding.textView10.setVisibility(View.VISIBLE);
+                            } else if (bmi >= 17 && bmi < 18.5) {
+                                binding.textView10.setText("Mild Thinness");
+                                binding.textView10.setVisibility(View.VISIBLE);
+                            } else if (bmi >= 18.5 && bmi < 25) {
+                                binding.textView10.setText("Normal");
+                                binding.textView10.setVisibility(View.VISIBLE);
+                            } else if (bmi >= 25 && bmi < 30) {
+                                binding.textView10.setText("Overweight");
+                                binding.textView10.setVisibility(View.VISIBLE);
+                            } else if (bmi >= 30 && bmi < 35) {
+                                binding.textView10.setText("Obese Class I");
+                                binding.textView10.setVisibility(View.VISIBLE);
+                            } else if (bmi >= 35 && bmi < 40) {
+                                binding.textView10.setText("Obese Class II");
+                                binding.textView10.setVisibility(View.VISIBLE);
+                            } else if (bmi >= 40) {
+                                binding.textView10.setText("Obese Class III");
+                                binding.textView10.setVisibility(View.VISIBLE);
+                            }
+
                         }
                     },1000);
                     binding.toggleButton.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
