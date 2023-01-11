@@ -54,10 +54,10 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 String email, pass, name, confirmPass;
 
-                name = binding.fullName.getText().toString().trim();
-                email = binding.emailAddress.getText().toString().trim();
-                pass = binding.password.getText().toString().trim();
-                confirmPass = binding.confirmPassword.getText().toString().trim();
+                name = Objects.requireNonNull(binding.fullName.getEditText()).getText().toString().trim();
+                email = Objects.requireNonNull(binding.emailAddress.getEditText()).getText().toString().trim();
+                pass = Objects.requireNonNull(binding.password.getEditText()).getText().toString().trim();
+                confirmPass = Objects.requireNonNull(binding.confirmPassword.getEditText()).getText().toString().trim();
 
                 if (name.isEmpty()) {
                     binding.fullName.setError("This field cannot be empty.");
@@ -86,10 +86,6 @@ public class SignUp extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(task.isSuccessful()){
                                                     dialog.dismiss();
-                                                    binding.fullName.setText("");
-                                                    binding.emailAddress.setText("");
-                                                    binding.password.setText("");
-                                                    binding.confirmPassword.setText("");
                                                     Intent i = new Intent(getApplicationContext(), SetGoals.class);
                                                     startActivity(i);
                                                     finish();

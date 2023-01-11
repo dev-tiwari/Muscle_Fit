@@ -37,6 +37,7 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), ForgotPassword.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -54,8 +55,8 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View view) {
                 String email, pass;
 
-                email = binding.signInEmailAddress.getText().toString().trim();
-                pass = binding.signInPassword.getText().toString();
+                email = Objects.requireNonNull(binding.signInEmailAddress.getEditText()).getText().toString().trim();
+                pass = Objects.requireNonNull(binding.signInPassword.getEditText()).getText().toString();
 
                 if (email.isEmpty()) {
                     binding.signInEmailAddress.setError("This field cannot be empty.");

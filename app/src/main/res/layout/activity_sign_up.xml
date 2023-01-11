@@ -50,34 +50,37 @@
                 android:layout_marginTop="40dp"
                 android:background="#353131" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fullName"
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="70dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/name"
-                android:drawablePadding="10dp"
+                app:startIconDrawable="@drawable/name"
                 android:ems="10"
                 android:hint="Name"
                 android:inputType="textPersonName"
                 android:textColorHint="@color/black"
                 android:textSize="15sp"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:errorEnabled="false">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailAddress"
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="130dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/mail"
+                app:startIconDrawable="@drawable/mail"
                 android:drawablePadding="10dp"
                 android:ems="10"
                 android:hint="Email Address"
@@ -85,43 +88,60 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="15sp"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:errorEnabled="false">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password"
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="190dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/key"
+                app:startIconDrawable="@drawable/key"
                 android:drawablePadding="10dp"
                 android:ems="10"
                 android:hint="Password"
+                app:passwordToggleEnabled="true"
                 android:inputType="textPassword"
                 android:textColorHint="@color/black"
                 android:textSize="15sp"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:errorEnabled="false">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/confirmPassword"
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="250dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/key"
+                app:startIconDrawable="@drawable/key"
                 android:drawablePadding="10dp"
                 android:ems="10"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:textColorHint="@color/black"
                 android:textSize="15sp"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:errorEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/submit"
