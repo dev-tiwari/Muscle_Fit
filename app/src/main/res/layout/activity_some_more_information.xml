@@ -112,7 +112,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/teal_700"
         android:text="Calculate BMI"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/continueButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -150,29 +152,34 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Male" />
+            android:text="Male"
+            app:cornerRadius="10dp" />
 
         <Button
             android:id="@+id/female"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Female" />
+            android:text="Female"
+            app:cornerRadius="10dp" />
 
         <Button
             android:id="@+id/notSpecify"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Not Specify" />
+            android:text="Not Specify"
+            app:cornerRadius="10dp" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <Button
         android:id="@+id/continueButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/teal_700"
         android:text="Continue"
         android:visibility="invisible"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/calcBMI"
         app:layout_constraintHorizontal_bias="0.5"

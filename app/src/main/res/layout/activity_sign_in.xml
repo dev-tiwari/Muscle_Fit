@@ -4,33 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#686060"
+    android:background="@color/teal_200"
     tools:context=".SignIn">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/teal_200">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            app:cardCornerRadius="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:background="@color/teal_700"
+                app:srcCompat="@drawable/logo" />
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:cardCornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2">
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
             <TextView
                 android:id="@+id/textView3"
@@ -59,7 +72,6 @@
                 android:layout_marginTop="70dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/mail"
                 android:drawablePadding="10dp"
                 android:ems="10"
                 android:hint="Email Address"
@@ -67,7 +79,8 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="15sp"
-                app:errorEnabled="false">
+                app:errorEnabled="false"
+                app:startIconDrawable="@drawable/mail">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -83,15 +96,15 @@
                 android:layout_marginTop="130dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/key"
                 android:ems="10"
                 android:hint="Password"
-                app:passwordToggleEnabled="true"
                 android:inputType="textPassword"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="15sp"
-                app:errorEnabled="false">
+                app:errorEnabled="false"
+                app:passwordToggleEnabled="true"
+                app:startIconDrawable="@drawable/key">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -124,9 +137,10 @@
                 android:layout_marginTop="230dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/teal_700"
                 android:text="Sign In"
                 android:textSize="16sp"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="10dp" />
 
             <Button
                 android:id="@+id/createaccount"
@@ -137,9 +151,10 @@
                 android:layout_marginTop="280dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/teal_700"
                 android:text="Create an account"
                 android:textSize="16sp"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="10dp" />
 
 
         </androidx.cardview.widget.CardView>
