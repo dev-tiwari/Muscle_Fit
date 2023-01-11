@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200"
+    android:background="@color/teal_700"
     tools:context=".SignIn">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/teal_200">
+        android:background="@color/teal_700">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
@@ -28,7 +28,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
-                android:background="@color/teal_700"
+                android:background="@color/teal_200"
                 app:srcCompat="@drawable/logo" />
         </androidx.cardview.widget.CardView>
 
