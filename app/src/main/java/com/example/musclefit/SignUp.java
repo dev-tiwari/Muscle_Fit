@@ -70,7 +70,7 @@ public class SignUp extends AppCompatActivity {
                 }else if (!confirmPass.equals(pass)) {
                     binding.confirmPassword.setError("Password does not Match!");
                 } else {
-                    final User user = new User(name, email, pass);
+                    final User user = new User(name, email);
                     dialog.show();
                     auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
