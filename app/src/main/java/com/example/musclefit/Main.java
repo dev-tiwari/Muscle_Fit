@@ -65,7 +65,7 @@ public class Main extends AppCompatActivity {
                             @Override
                             public void run() {
                                 dialog.dismiss();
-                                transaction.replace(binding.content.getId(), new ProfileFragment());
+                                transaction.replace(binding.content.getId(), new AccountFragment());
                                 transaction.commit();
                             }
                         }, 1000);
@@ -89,6 +89,10 @@ public class Main extends AppCompatActivity {
                                 dialog.dismiss();
                                 transaction.replace(binding.content.getId(), new DashboardFragment());
                                 transaction.commit();
+                                // To draw notification badge
+//                                BadgeDrawable badge = binding.bottomNavigation.getOrCreateBadge(R.id.homeMain);
+//                                badge.setVisible(true);
+//                                badge.setNumber(99);
                             }
                         }, 1000);
                         break;
@@ -107,7 +111,7 @@ public class Main extends AppCompatActivity {
                             @Override
                             public void run() {
                                 dialog.dismiss();
-                                transaction.replace(binding.content.getId(), new ProfileFragment());
+                                transaction.replace(binding.content.getId(), new AccountFragment());
                                 transaction.commit();
                             }
                         }, 1000);

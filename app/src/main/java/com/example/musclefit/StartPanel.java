@@ -14,7 +14,6 @@ public class StartPanel extends AppCompatActivity {
 
     ActivityStartPanelBinding binding;
     FirebaseAuth auth;
-    FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +35,7 @@ public class StartPanel extends AppCompatActivity {
                 finish();
             }
         });
+
         binding.signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

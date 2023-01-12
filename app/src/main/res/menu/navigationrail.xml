@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/profile"
+            android:enabled="true"
+            android:icon="@drawable/user"
+            android:title="Profile"/>
+        <item
+            android:id="@+id/settings"
+            android:enabled="true"
+            android:icon="@drawable/name"
+            android:title="Settings"/>
+        <item
+            android:id="@+id/logout"
+            android:enabled="true"
+            android:icon="@drawable/log_out"
+            android:title="Logout"/>
+
+</menu>
