@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/homeMain"
+            android:enabled="true"
+            android:icon="@drawable/mail"
+            android:title="Home"/>
+        <item
+            android:id="@+id/item_2"
+            android:enabled="true"
+            android:icon="@drawable/key"
+            android:title="Label 2"/>
+        <item
+            android:id="@+id/item_3"
+            android:enabled="true"
+            android:icon="@drawable/key"
+            android:title="Label 3"/>
+        <item
+            android:id="@+id/item_4"
+            android:enabled="true"
+            android:icon="@drawable/key"
+            android:title="Label 4"/>
+        <item
+            android:id="@+id/profile"
+            android:enabled="true"
+            android:icon="@drawable/key"
+            android:title="Profile"/>
+
+</menu>

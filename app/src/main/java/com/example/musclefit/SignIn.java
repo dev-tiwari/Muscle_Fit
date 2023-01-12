@@ -69,7 +69,7 @@ public class SignIn extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             dialog.dismiss();
                             if (task.isSuccessful()) {
-                                startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                                startActivity(new Intent(getApplicationContext(), Main.class));
                                 finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();

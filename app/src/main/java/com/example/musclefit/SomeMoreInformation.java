@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -13,12 +12,10 @@ import android.widget.Toast;
 
 import com.example.musclefit.databinding.ActivitySomeMoreInformationBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -150,7 +147,7 @@ public class SomeMoreInformation extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<DocumentReference> task) {
                                         if (task.isSuccessful()) {
                                             dialog.dismiss();
-                                            startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                                            startActivity(new Intent(getApplicationContext(), Main.class));
                                             finish();
                                         } else {
                                             Toast.makeText(SomeMoreInformation.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
