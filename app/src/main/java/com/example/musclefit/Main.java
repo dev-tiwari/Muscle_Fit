@@ -56,10 +56,7 @@ public class Main extends AppCompatActivity {
                     case R.id.item_3:
                         Toast.makeText(Main.this, "Item 3 has been Selected.", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.item_4:
-                        Toast.makeText(Main.this, "Item 4 has been Selected.", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.profile:
+                    case R.id.account:
                         dialog.show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -102,10 +99,7 @@ public class Main extends AppCompatActivity {
                     case R.id.item_3:
                         Toast.makeText(Main.this, "Item 3 has been ReSelected.", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.item_4:
-                        Toast.makeText(Main.this, "Item 4 has been ReSelected.", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.profile:
+                    case R.id.account:
                         dialog.show();
                         new Handler().postDelayed(new Runnable() {
                             @Override

@@ -9,21 +9,16 @@
             android:id="@+id/item_2"
             android:enabled="true"
             android:icon="@drawable/key"
-            android:title="Label 2"/>
+            android:title="Plan"/>
         <item
             android:id="@+id/item_3"
             android:enabled="true"
             android:icon="@drawable/key"
-            android:title="Label 3"/>
+            android:title="Workouts"/>
         <item
-            android:id="@+id/item_4"
+            android:id="@+id/account"
             android:enabled="true"
             android:icon="@drawable/key"
-            android:title="Label 4"/>
-        <item
-            android:id="@+id/profile"
-            android:enabled="true"
-            android:icon="@drawable/key"
-            android:title="Profile"/>
+            android:title="Account"/>
 
 </menu>

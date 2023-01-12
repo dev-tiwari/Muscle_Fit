@@ -1,5 +1,6 @@
 package com.example.musclefit;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class AccountFragment extends Fragment {
         transaction.commit();
 
         binding.navigationRail.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 assert getFragmentManager() != null;
