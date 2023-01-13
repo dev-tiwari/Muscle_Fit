@@ -4,11 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.musclefit.databinding.ActivitySettingsBinding;
+
 public class Settings extends AppCompatActivity {
+
+    ActivitySettingsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        binding = ActivitySettingsBinding.inflate(getLayoutInflater());
+
+        setContentView(binding.getRoot());
+
+        binding.materialToolbar.setTitle("Settings");
+
+
     }
 }

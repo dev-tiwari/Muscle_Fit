@@ -64,6 +64,7 @@ public class SomeMoreInformation extends AppCompatActivity {
                         @Override
                         public void run() {
                             dialog.dismiss();
+                            binding.calcBMI.setVisibility(View.INVISIBLE);
                             binding.continueButton.setVisibility(View.VISIBLE);
                             binding.textView11.setVisibility(View.VISIBLE);
                             binding.toggleButton.setVisibility(View.VISIBLE);
@@ -113,7 +114,6 @@ public class SomeMoreInformation extends AppCompatActivity {
                                 @Override
                                 public void onClick(View view) {
                                     gender = "Male";
-
                                 }
                             });
                             binding.female.setOnClickListener(new View.OnClickListener() {

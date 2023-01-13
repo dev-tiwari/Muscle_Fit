@@ -85,7 +85,7 @@ public class AccountFragment extends Fragment {
         binding.editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(getContext(), ));
+                startActivity(new Intent(getContext(), EditProfile.class));
             }
         });
 
