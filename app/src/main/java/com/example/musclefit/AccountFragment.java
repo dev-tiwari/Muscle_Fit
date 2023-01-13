@@ -1,24 +1,27 @@
 package com.example.musclefit;
 
-import android.annotation.SuppressLint;
+import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.musclefit.databinding.FragmentAccountBinding;
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -34,6 +37,7 @@ public class AccountFragment extends Fragment {
     FragmentAccountBinding binding;
     ProgressDialog dialog;
     FirebaseAuth auth;
+    FirebaseFirestore database;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -41,90 +45,172 @@ public class AccountFragment extends Fragment {
 
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         auth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Just a Minute...");
 
-        assert getFragmentManager() != null;
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(binding.navigationContent.getId(), new ProfileFragment());
-        transaction.commit();
+        boolean check = Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified();
+        dialog.show();
 
-        binding.navigationRail.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
+        if (check) {
+            binding.cardView7.setVisibility(View.INVISIBLE);
+        }
+
+        database.collection("users")
+                .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        dialog.dismiss();
+                        User user = documentSnapshot.toObject(User.class);
+                        binding.profileName.setText(user.getName());
+                        binding.profileGmail.setText(user.getEmail());
+                        if(check){
+                            binding.emailVerifyBack.setCardBackgroundColor(Color.parseColor("#00FF00"));
+                            binding.verifyEmail.setText("Verified");
+                        } else {
+                            binding.emailVerifyBack.setCardBackgroundColor(Color.parseColor("#FF0000"));
+                            binding.verifyEmail.setText("Not Verified");
+                        }
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
+                        Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        binding.editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                assert getFragmentManager() != null;
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                switch (item.getItemId()) {
-                    case R.id.profile:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                transaction.replace(binding.navigationContent.getId(), new ProfileFragment());
-                                transaction.commit();
-                            }
-                        }, 1000);
-                        break;
-                    case R.id.settings:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                transaction.replace(binding.navigationContent.getId(), new SettingsFragment());
-                                transaction.commit();
-                            }
-                        }, 1000);
-                        break;
-                    case R.id.logout:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                auth.signOut();
-                                startActivity(new Intent(getContext(), StartPanel.class));
-                                requireActivity().finish();
-                            }
-                        },1000);
-                        break;
-                }
-                return true;
+            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), ));
             }
         });
 
-        binding.navigationRail.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener() {
+        binding.settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                switch (item.getItemId()) {
-                    case R.id.profile:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                transaction.replace(binding.navigationContent.getId(), new ProfileFragment());
-                                transaction.commit();
-                            }
-                        }, 1000);
-                        break;
-                    case R.id.settings:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                transaction.replace(binding.navigationContent.getId(), new SettingsFragment());
-                                transaction.commit();
-                            }
-                        }, 1000);
-                        break;
-                }
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Settings.class));
             }
         });
+
+        binding.logoutAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        auth.signOut();
+                        startActivity(new Intent(getContext(), StartPanel.class));
+                        requireActivity().finish();
+                    }
+                }, 1000);
+            }
+        });
+
+        binding.verifyMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.show();
+                auth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        dialog.dismiss();
+                        Toast.makeText(getContext(), "Verification Mail has been Sent to your Registered Email Address. Please Verify.", Toast.LENGTH_SHORT).show();
+                        auth.signOut();
+                        startActivity(new Intent(getContext(), StartPanel.class));
+                        requireActivity().finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
+                        Toast.makeText(getContext(), "Error: "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+//        binding.navigationRail.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+//            @SuppressLint("NonConstantResourceId")
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                assert getFragmentManager() != null;
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                switch (item.getItemId()) {
+//                    case R.id.profile:
+//                        dialog.show();
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                dialog.dismiss();
+//                                transaction.replace(binding.navigationContent.getId(), new ProfileFragment());
+//                                transaction.commit();
+//                            }
+//                        }, 1000);
+//                        break;
+//                    case R.id.settings:
+//                        dialog.show();
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                dialog.dismiss();
+//                                transaction.replace(binding.navigationContent.getId(), new SettingsFragment());
+//                                transaction.commit();
+//                            }
+//                        }, 1000);
+//                        break;
+//                    case R.id.logout:
+//                        dialog.show();
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                dialog.dismiss();
+//                                auth.signOut();
+//                                startActivity(new Intent(getContext(), StartPanel.class));
+//                                requireActivity().finish();
+//                            }
+//                        },1000);
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
+//
+//        binding.navigationRail.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener() {
+//            @Override
+//            public void onNavigationItemReselected(@NonNull MenuItem item) {
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                switch (item.getItemId()) {
+//                    case R.id.profile:
+//                        dialog.show();
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                dialog.dismiss();
+//                                transaction.replace(binding.navigationContent.getId(), new ProfileFragment());
+//                                transaction.commit();
+//                            }
+//                        }, 1000);
+//                        break;
+//                    case R.id.settings:
+//                        dialog.show();
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                dialog.dismiss();
+//                                transaction.replace(binding.navigationContent.getId(), new SettingsFragment());
+//                                transaction.commit();
+//                            }
+//                        }, 1000);
+//                        break;
+//                }
+//            }
+//        });
 
         return binding.getRoot();
     }

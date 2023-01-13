@@ -40,15 +40,8 @@ public class Main extends AppCompatActivity {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 switch (item.getItemId()) {
                     case R.id.homeMain:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                transaction.replace(binding.content.getId(), new DashboardFragment());
-                                transaction.commit();
-                            }
-                        }, 1000);
+                        transaction.replace(binding.content.getId(), new DashboardFragment());
+                        transaction.commit();
                         break;
                     case R.id.item_2:
                         Toast.makeText(Main.this, "Item 2 has been Selected.", Toast.LENGTH_SHORT).show();
@@ -57,15 +50,8 @@ public class Main extends AppCompatActivity {
                         Toast.makeText(Main.this, "Item 3 has been Selected.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.account:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                transaction.replace(binding.content.getId(), new AccountFragment());
-                                transaction.commit();
-                            }
-                        }, 1000);
+                        transaction.replace(binding.content.getId(), new AccountFragment());
+                        transaction.commit();
                         break;
                 }
                 return true;
@@ -79,19 +65,12 @@ public class Main extends AppCompatActivity {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 switch (item.getItemId()) {
                     case R.id.homeMain:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                transaction.replace(binding.content.getId(), new DashboardFragment());
-                                transaction.commit();
+                        transaction.replace(binding.content.getId(), new DashboardFragment());
+                        transaction.commit();
                                 // To draw notification badge
 //                                BadgeDrawable badge = binding.bottomNavigation.getOrCreateBadge(R.id.homeMain);
 //                                badge.setVisible(true);
 //                                badge.setNumber(99);
-                            }
-                        }, 1000);
                         break;
                     case R.id.item_2:
                         Toast.makeText(Main.this, "Item 2 has been ReSelected.", Toast.LENGTH_SHORT).show();
@@ -100,15 +79,8 @@ public class Main extends AppCompatActivity {
                         Toast.makeText(Main.this, "Item 3 has been ReSelected.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.account:
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                transaction.replace(binding.content.getId(), new AccountFragment());
-                                transaction.commit();
-                            }
-                        }, 1000);
+                        transaction.replace(binding.content.getId(), new AccountFragment());
+                        transaction.commit();
                         break;
                 }
             }
