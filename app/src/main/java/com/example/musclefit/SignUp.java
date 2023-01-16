@@ -52,10 +52,11 @@ public class SignUp extends AppCompatActivity {
         binding.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email, pass, name, confirmPass;
+                String email, pass, name, phoneNumber, confirmPass;
 
                 name = Objects.requireNonNull(binding.fullName.getEditText()).getText().toString().trim();
                 email = Objects.requireNonNull(binding.emailAddress.getEditText()).getText().toString().trim();
+                phoneNumber = Objects.requireNonNull(binding.phoneNumber.getEditText()).getText().toString().trim();
                 pass = Objects.requireNonNull(binding.password.getEditText()).getText().toString().trim();
                 confirmPass = Objects.requireNonNull(binding.confirmPassword.getEditText()).getText().toString().trim();
 
@@ -63,6 +64,8 @@ public class SignUp extends AppCompatActivity {
                     binding.fullName.setError("This field cannot be empty.");
                 } else if (email.isEmpty()) {
                     binding.emailAddress.setError("This field cannot be empty.");
+                } else if (phoneNumber.isEmpty()) {
+                    binding.phoneNumber.setError("This field cannot be empty.");
                 } else if (pass.isEmpty() || pass.length() < 6) {
                     binding.password.setError("Password Length Should Exceed 6 Characters!");
                 }else if (confirmPass.isEmpty() || confirmPass.length() < 6 ) {
@@ -70,7 +73,7 @@ public class SignUp extends AppCompatActivity {
                 }else if (!confirmPass.equals(pass)) {
                     binding.confirmPassword.setError("Password does not Match!");
                 } else {
-                    final User user = new User(name, email);
+                    final User user = new User(name, email, phoneNumber);
                     dialog.show();
                     auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -87,6 +90,9 @@ public class SignUp extends AppCompatActivity {
                                                 if(task.isSuccessful()){
                                                     dialog.dismiss();
                                                     Intent i = new Intent(getApplicationContext(), SetGoals.class);
+                                                    i.putExtra("name", name);
+                                                    i.putExtra("email", email);
+                                                    i.putExtra("phoneNumber", phoneNumber);
                                                     startActivity(i);
                                                     finish();
                                                 } else {

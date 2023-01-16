@@ -54,7 +54,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintVertical_chainStyle="packed"
+        app:startIconDrawable="@drawable/height">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -77,7 +78,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/height">
+        app:layout_constraintTop_toBottomOf="@+id/height"
+        app:startIconDrawable="@drawable/weight">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -99,7 +101,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weight">
+        app:layout_constraintTop_toBottomOf="@+id/weight"
+        app:startIconDrawable="@drawable/age">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

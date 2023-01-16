@@ -26,11 +26,13 @@ public class SomeMoreInformation extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore database;
     ProgressDialog dialog;
+    String name, email, phoneNumber, personalize;
     private String gender;
-    private String height, weight, age, BMI;
+    private String height, weight, age, BMI, h1, w1;
     float h, w;
     float heightinm, doub;
     float bmi;
+    private String weightCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +44,23 @@ public class SomeMoreInformation extends AppCompatActivity {
         dialog.setMessage("Just a Minute...");
         setContentView(binding.getRoot());
 
+        name = getIntent().getStringExtra("name");
+        email = getIntent().getStringExtra("email");
+        phoneNumber = getIntent().getStringExtra("phoneNumber");
+        personalize = getIntent().getStringExtra("personalize");
+
         binding.calcBMI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
-                height = Objects.requireNonNull(binding.height.getEditText()).getText().toString().trim();
-                weight = Objects.requireNonNull(binding.weight.getEditText()).getText().toString().trim();
-                age = Objects.requireNonNull(binding.age.getEditText()).getText().toString().trim();
+                String[] height1 = Objects.requireNonNull(binding.height.getEditText()).getText().toString().trim().split(" ");
+                height = height1[0];
+                String[] weight1 = Objects.requireNonNull(binding.weight.getEditText()).getText().toString().trim().split(" ");
+                weight = weight1[0];
+                String[] age1 = Objects.requireNonNull(binding.age.getEditText()).getText().toString().trim().split(" ");
+                age = age1[0] + " yrs";
+                h1 = height + " cm";
+                w1 = weight + " kg";
 
                 if (height.isEmpty()) {
                     dialog.dismiss();
@@ -56,7 +68,7 @@ public class SomeMoreInformation extends AppCompatActivity {
                 } else if (weight.isEmpty()) {
                     dialog.dismiss();
                     binding.weight.setError("This Field Cannot be Empty.");
-                } else if (age.isEmpty()) {
+                } else if (binding.age.getEditText().getText().toString().trim().isEmpty()) {
                     dialog.dismiss();
                     binding.age.setError("This Field Cannot be Empty.");
                 } else {
@@ -80,71 +92,84 @@ public class SomeMoreInformation extends AppCompatActivity {
                             binding.textView9.setVisibility(View.VISIBLE);
 
                             if (bmi < 16) {
-                                binding.textView10.setText("Severe Thinness");
+                                weightCategory = "Severe Thinness";
+                                binding.textView10.setText(weightCategory);
                                 binding.textView10.setVisibility(View.VISIBLE);
                             } else if (bmi >= 16 && bmi < 17) {
-                                binding.textView10.setText("Moderate Thinness");
+                                weightCategory = "Moderate Thinness";
+                                binding.textView10.setText(weightCategory);
                                 binding.textView10.setVisibility(View.VISIBLE);
                             } else if (bmi >= 17 && bmi < 18.5) {
-                                binding.textView10.setText("Mild Thinness");
+                                weightCategory = "Mild Thinness";
+                                binding.textView10.setText(weightCategory);
                                 binding.textView10.setVisibility(View.VISIBLE);
                             } else if (bmi >= 18.5 && bmi < 25) {
-                                binding.textView10.setText("Normal");
+                                weightCategory = "Normal";
+                                binding.textView10.setText(weightCategory);
                                 binding.textView10.setVisibility(View.VISIBLE);
                             } else if (bmi >= 25 && bmi < 30) {
-                                binding.textView10.setText("Overweight");
+                                weightCategory = "Overweight";
+                                binding.textView10.setText(weightCategory);
                                 binding.textView10.setVisibility(View.VISIBLE);
                             } else if (bmi >= 30 && bmi < 35) {
-                                binding.textView10.setText("Obese Class I");
+                                weightCategory = "Obese Class I";
+                                binding.textView10.setText(weightCategory);
                                 binding.textView10.setVisibility(View.VISIBLE);
                             } else if (bmi >= 35 && bmi < 40) {
-                                binding.textView10.setText("Obese Class II");
+                                weightCategory = "Obese Class II";
+                                binding.textView10.setText(weightCategory);
                                 binding.textView10.setVisibility(View.VISIBLE);
                             } else if (bmi >= 40) {
-                                binding.textView10.setText("Obese Class III");
+                                weightCategory = "Obese Class III";
+                                binding.textView10.setText(weightCategory);
                                 binding.textView10.setVisibility(View.VISIBLE);
                             }
 
                         }
                     },1000);
-                    binding.toggleButton.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-                        @Override
-                        public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                            binding.male.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    gender = "Male";
-                                }
-                            });
-                            binding.female.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    gender = "Female";
-                                }
-                            });
-                            binding.notSpecify.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    gender = "Not Specify";
-                                }
-                            });
-                        }
-                    });
+
+                    try {
+                        binding.toggleButton.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+                            @Override
+                            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                                binding.male.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        gender = "Male";
+                                    }
+                                });
+                                binding.female.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        gender = "Female";
+                                    }
+                                });
+                                binding.notSpecify.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        gender = "Not Specify";
+                                    }
+                                });
+                            }
+                        });
+                    } catch (Exception e) {
+                        Toast.makeText(SomeMoreInformation.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    } finally {
+                        gender = "Not Specify";
+                    }
                 }
                 binding.continueButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.show();
-                        final MoreInformation user = new MoreInformation(height, weight, age, gender, BMI);
-
+                        final User user = new User(name, email, phoneNumber, personalize, h1, w1, age, gender, BMI, weightCategory);
                         database
                                 .collection("users")
                                 .document(auth.getCurrentUser().getUid())
-                                .collection("moreInformation")
-                                .add(user)
-                                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                .set(user)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                                    public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             dialog.dismiss();
                                             startActivity(new Intent(getApplicationContext(), Main.class));

@@ -49,12 +49,9 @@ public class AccountFragment extends Fragment {
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Just a Minute...");
 
-        boolean check = Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified();
         dialog.show();
 
-        if (check) {
-            binding.cardView7.setVisibility(View.INVISIBLE);
-        }
+        boolean check = Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified();
 
         database.collection("users")
                 .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
@@ -63,6 +60,7 @@ public class AccountFragment extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         dialog.dismiss();
                         User user = documentSnapshot.toObject(User.class);
+                        assert user != null;
                         binding.profileName.setText(user.getName());
                         binding.profileGmail.setText(user.getEmail());
                         if(check){
@@ -112,28 +110,6 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        binding.verifyMail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.show();
-                auth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        dialog.dismiss();
-                        Toast.makeText(getContext(), "Verification Mail has been Sent to your Registered Email Address. Please Verify.", Toast.LENGTH_SHORT).show();
-                        auth.signOut();
-                        startActivity(new Intent(getContext(), StartPanel.class));
-                        requireActivity().finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        dialog.dismiss();
-                        Toast.makeText(getContext(), "Error: "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
 
 //        binding.navigationRail.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
 //            @SuppressLint("NonConstantResourceId")

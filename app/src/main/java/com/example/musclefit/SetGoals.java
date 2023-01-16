@@ -27,6 +27,7 @@ public class SetGoals extends AppCompatActivity {
     FirebaseAuth auth;
     ProgressDialog dialog;
     FirebaseFirestore database;
+    String name, email, phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +39,29 @@ public class SetGoals extends AppCompatActivity {
         dialog.setMessage("Just a Minute...");
         database = FirebaseFirestore.getInstance();
 
+        name = getIntent().getStringExtra("name");
+        email = getIntent().getStringExtra("email");
+        phoneNumber = getIntent().getStringExtra("phoneNumber");
+
         binding.loseWeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
-                Personalize personalize = new Personalize("To Lose Weight");
+                User user = new User(name, email, phoneNumber, "To Lose Weight");
                 database.collection("users")
                         .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
-                        .collection("personalize")
-                        .add(personalize)
-                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        .set(user)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                            public void onComplete(@NonNull Task<Void> task) {
                                 dialog.dismiss();
                                 if (task.isSuccessful()){
-                                    startActivity(new Intent(getApplicationContext(), SomeMoreInformation.class));
+                                    Intent intent = new Intent(getApplicationContext(), SomeMoreInformation.class);
+                                    intent.putExtra("name", name);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("phoneNumber", phoneNumber);
+                                    intent.putExtra("personalize", "To Lose Weight");
+                                    startActivity(intent);
                                     finish();
                                 } else {
                                     Toast.makeText(SetGoals.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -66,17 +75,21 @@ public class SetGoals extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.show();
-                Personalize personalize = new Personalize("To be More Active");
+                User user = new User(name, email, phoneNumber, "To be More Active");
                 database.collection("users")
                         .document(auth.getCurrentUser().getUid())
-                        .collection("personalize")
-                        .add(personalize)
-                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        .set(user)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                            public void onComplete(@NonNull Task<Void> task) {
                                 dialog.dismiss();
-                                if (task.isSuccessful()){
-                                    startActivity(new Intent(getApplicationContext(), SomeMoreInformation.class));
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(getApplicationContext(), SomeMoreInformation.class);
+                                    intent.putExtra("name", name);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("phoneNumber", phoneNumber);
+                                    intent.putExtra("personalize", "To Be More Active");
+                                    startActivity(intent);
                                     finish();
                                 } else {
                                     Toast.makeText(SetGoals.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -90,17 +103,21 @@ public class SetGoals extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.show();
-                Personalize personalize = new Personalize("Build Muscles");
+                User user = new User(name, email, phoneNumber, "Build Muscles");
                 database.collection("users")
                         .document(auth.getCurrentUser().getUid())
-                        .collection("personalize")
-                        .add(personalize)
-                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        .set(user)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                            public void onComplete(@NonNull Task<Void> task) {
                                 dialog.dismiss();
-                                if (task.isSuccessful()){
-                                    startActivity(new Intent(getApplicationContext(), SomeMoreInformation.class));
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(getApplicationContext(), SomeMoreInformation.class);
+                                    intent.putExtra("name", name);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("phoneNumber", phoneNumber);
+                                    intent.putExtra("personalize", "Build Muscles");
+                                    startActivity(intent);
                                     finish();
                                 } else {
                                     Toast.makeText(SetGoals.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -108,8 +125,6 @@ public class SetGoals extends AppCompatActivity {
                             }
                         });
             }
-
         });
-
     }
 }
