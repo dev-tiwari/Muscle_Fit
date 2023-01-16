@@ -58,9 +58,6 @@ public class Settings extends AppCompatActivity {
                     public void onSuccess(Void unused) {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Verification Mail has been Sent to your Registered Email Address. Please Verify.", Toast.LENGTH_SHORT).show();
-                        auth.signOut();
-                        startActivity(new Intent(getApplicationContext(), StartPanel.class));
-                        finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -72,7 +69,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        binding.button5.setOnClickListener(new View.OnClickListener() {
+        binding.deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
@@ -102,6 +99,29 @@ public class Settings extends AppCompatActivity {
                 });
             }
         });
+
+        binding.editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), EditProfile.class));
+            }
+        });
+
+        binding.resetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ForgotPassword.class));
+            }
+        });
+
+        binding.updatePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), UpdatePassword.class));
+            }
+        });
+
+
 
     }
 }

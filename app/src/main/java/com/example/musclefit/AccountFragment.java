@@ -110,83 +110,26 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        binding.myInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), MyInformation.class));
+            }
+        });
 
-//        binding.navigationRail.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-//            @SuppressLint("NonConstantResourceId")
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                assert getFragmentManager() != null;
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                switch (item.getItemId()) {
-//                    case R.id.profile:
-//                        dialog.show();
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                dialog.dismiss();
-//                                transaction.replace(binding.navigationContent.getId(), new ProfileFragment());
-//                                transaction.commit();
-//                            }
-//                        }, 1000);
-//                        break;
-//                    case R.id.settings:
-//                        dialog.show();
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                dialog.dismiss();
-//                                transaction.replace(binding.navigationContent.getId(), new SettingsFragment());
-//                                transaction.commit();
-//                            }
-//                        }, 1000);
-//                        break;
-//                    case R.id.logout:
-//                        dialog.show();
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                dialog.dismiss();
-//                                auth.signOut();
-//                                startActivity(new Intent(getContext(), StartPanel.class));
-//                                requireActivity().finish();
-//                            }
-//                        },1000);
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
-//
-//        binding.navigationRail.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener() {
-//            @Override
-//            public void onNavigationItemReselected(@NonNull MenuItem item) {
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                switch (item.getItemId()) {
-//                    case R.id.profile:
-//                        dialog.show();
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                dialog.dismiss();
-//                                transaction.replace(binding.navigationContent.getId(), new ProfileFragment());
-//                                transaction.commit();
-//                            }
-//                        }, 1000);
-//                        break;
-//                    case R.id.settings:
-//                        dialog.show();
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                dialog.dismiss();
-//                                transaction.replace(binding.navigationContent.getId(), new SettingsFragment());
-//                                transaction.commit();
-//                            }
-//                        }, 1000);
-//                        break;
-//                }
-//            }
-//        });
+        binding.reminders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Reminders.class));
+            }
+        });
+
+        binding.favourites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Favourites.class));
+            }
+        });
 
         return binding.getRoot();
     }

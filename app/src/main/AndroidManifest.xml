@@ -16,6 +16,18 @@
         android:theme="@style/Theme.MuscleFit"
         tools:targetApi="31">
         <activity
+            android:name=".Favourites"
+            android:exported="false" />
+        <activity
+            android:name=".Reminders"
+            android:exported="false" />
+        <activity
+            android:name=".MyInformation"
+            android:exported="false" />
+        <activity
+            android:name=".UpdatePassword"
+            android:exported="false" />
+        <activity
             android:name=".EditProfile"
             android:exported="false">
             <meta-data
