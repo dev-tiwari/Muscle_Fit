@@ -52,6 +52,9 @@ public class AccountFragment extends Fragment {
         dialog.show();
 
         boolean check = Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified();
+        if (check) {
+            binding.cardView7.setVisibility(View.INVISIBLE);
+        }
 
         database.collection("users")
                 .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
@@ -130,6 +133,31 @@ public class AccountFragment extends Fragment {
                 startActivity(new Intent(getContext(), Favourites.class));
             }
         });
+
+        binding.verifyMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.show();
+                Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        dialog.dismiss();
+                        Toast.makeText(getContext(), "Verification Mail has been Sent to your Registered Email Address. Please Verify.", Toast.LENGTH_SHORT).show();
+                        auth.getCurrentUser().reload();
+                        auth.signOut();
+                        startActivity(new Intent(getContext(), SignIn.class));
+                        requireActivity().finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
+                        Toast.makeText(getContext(), "Error: "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
         return binding.getRoot();
     }

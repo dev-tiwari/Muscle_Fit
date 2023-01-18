@@ -41,33 +41,7 @@ public class Settings extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
-        boolean check = Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified();
-
-        if (check) {
-            binding.cardView7.setVisibility(View.INVISIBLE);
-        }
-
         binding.materialToolbar.setTitle("Settings");
-
-        binding.verifyMail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.show();
-                Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Verification Mail has been Sent to your Registered Email Address. Please Verify.", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Error: "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
 
         binding.deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override

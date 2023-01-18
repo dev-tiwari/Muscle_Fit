@@ -84,7 +84,8 @@ public class SomeMoreInformation extends AppCompatActivity {
                             w = Float.parseFloat(weight);
                             heightinm = h / 100f;
                             doub = heightinm * heightinm;
-                            BMI = String.valueOf(w/doub);
+                            float bm = (w / doub);
+                            BMI = String.valueOf(bm);
                             bmi = Float.parseFloat(BMI);
 
                             binding.textView8.setVisibility(View.VISIBLE);

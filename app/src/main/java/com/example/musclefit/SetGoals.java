@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -47,6 +49,9 @@ public class SetGoals extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.show();
+                binding.buildMuscles.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                binding.loseWeight.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00FF00")));
+                binding.moreActive.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                 User user = new User(name, email, phoneNumber, "To Lose Weight");
                 database.collection("users")
                         .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
@@ -75,9 +80,12 @@ public class SetGoals extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.show();
+                binding.buildMuscles.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                binding.loseWeight.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                binding.moreActive.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00FF00")));
                 User user = new User(name, email, phoneNumber, "To be More Active");
                 database.collection("users")
-                        .document(auth.getCurrentUser().getUid())
+                        .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                         .set(user)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -103,9 +111,12 @@ public class SetGoals extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.show();
+                binding.buildMuscles.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00FF00")));
+                binding.loseWeight.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                binding.moreActive.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                 User user = new User(name, email, phoneNumber, "Build Muscles");
                 database.collection("users")
-                        .document(auth.getCurrentUser().getUid())
+                        .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                         .set(user)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
