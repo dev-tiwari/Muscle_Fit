@@ -3,6 +3,7 @@ package com.example.musclefit;
 import static com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -21,7 +22,9 @@ import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
@@ -48,8 +51,6 @@ public class Reminders extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
         dialog = new ProgressDialog(this);
         dialog.setMessage("Just a Minute...");
-
-        dialog.show();
 
         binding.select.setOnClickListener(new View.OnClickListener() {
             @Override
