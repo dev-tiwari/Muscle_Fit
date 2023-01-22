@@ -5,6 +5,7 @@ import static com.google.android.material.timepicker.MaterialTimePicker.INPUT_MO
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -51,6 +52,8 @@ public class Reminders extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
         dialog = new ProgressDialog(this);
         dialog.setMessage("Just a Minute...");
+
+        dialog.show();
 
         binding.select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +186,39 @@ public class Reminders extends AppCompatActivity {
             }
         });
 
+        database.collection("users")
+                        .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                                .collection("reminder")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        dialog.dismiss();
+                        assert value != null;
+                        if (!value.isEmpty()) {
+                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                            transaction.replace(binding.con.getId(), new ReminderShowingFragment());
+                            transaction.commit();
+                            allInvisible();
+                        }
+                    }
+                });
+
         setContentView(binding.getRoot());
+    }
+
+    private void allInvisible() {
+        binding.textView15.setVisibility(View.INVISIBLE);
+        binding.select.setVisibility(View.INVISIBLE);
+        binding.textView16.setVisibility(View.INVISIBLE);
+        binding.textView17.setVisibility(View.INVISIBLE);
+        binding.monday.setVisibility(View.INVISIBLE);
+        binding.tuesday.setVisibility(View.INVISIBLE);
+        binding.wednesday.setVisibility(View.INVISIBLE);
+        binding.thursday.setVisibility(View.INVISIBLE);
+        binding.friday.setVisibility(View.INVISIBLE);
+        binding.saturday.setVisibility(View.INVISIBLE);
+        binding.sunday.setVisibility(View.INVISIBLE);
+        binding.saveBtn.setVisibility(View.INVISIBLE);
     }
 
     public String formatTime(int hour, int minute){
