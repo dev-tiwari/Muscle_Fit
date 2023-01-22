@@ -6,4 +6,155 @@
     android:layout_height="match_parent"
     tools:context=".Reminders">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryVariant"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Reminders"
+        app:titleCentered="false" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/aladin"
+        android:text="Select time for reminder"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar3" />
+
+    <Button
+        android:id="@+id/select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/teal_700"
+        android:text="Select"
+        app:layout_constraintEnd_toEndOf="@+id/textView15"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/textView15"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/select" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/aladin"
+        android:text="Repeat :"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/monday"
+        style="@style/Widget.Material3.Chip.Filter.Elevated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Monday"
+        app:layout_constraintEnd_toStartOf="@+id/tuesday"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/tuesday"
+        style="@style/Widget.Material3.Chip.Filter.Elevated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Tuesday"
+        app:layout_constraintEnd_toStartOf="@+id/wednesday"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/monday"
+        app:layout_constraintTop_toTopOf="@+id/monday" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/wednesday"
+        style="@style/Widget.Material3.Chip.Filter.Elevated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wednesday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tuesday"
+        app:layout_constraintTop_toTopOf="@+id/tuesday" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/thursday"
+        style="@style/Widget.Material3.Chip.Filter.Elevated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thursday"
+        app:layout_constraintStart_toStartOf="@+id/monday"
+        app:layout_constraintTop_toBottomOf="@+id/monday" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/friday"
+        style="@style/Widget.Material3.Chip.Filter.Elevated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Friday"
+        app:layout_constraintStart_toEndOf="@+id/thursday"
+        app:layout_constraintTop_toBottomOf="@+id/monday" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/saturday"
+        style="@style/Widget.Material3.Chip.Filter.Elevated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Saturday"
+        app:layout_constraintStart_toEndOf="@+id/friday"
+        app:layout_constraintTop_toBottomOf="@+id/tuesday" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/sunday"
+        style="@style/Widget.Material3.Chip.Filter.Elevated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sunday"
+        app:layout_constraintEnd_toEndOf="@+id/saturday"
+        app:layout_constraintStart_toStartOf="@+id/thursday"
+        app:layout_constraintTop_toBottomOf="@+id/friday" />
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/teal_700"
+        android:text="Save"
+        android:textSize="20sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sunday" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
