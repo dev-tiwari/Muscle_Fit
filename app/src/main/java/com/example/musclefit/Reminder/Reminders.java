@@ -1,4 +1,4 @@
-package com.example.musclefit;
+package com.example.musclefit.Reminder;
 
 import static com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK;
 
@@ -7,7 +7,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -15,24 +21,16 @@ import android.widget.Toast;
 
 import com.example.musclefit.databinding.ActivityRemindersBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 
 public class Reminders extends AppCompatActivity {
@@ -52,6 +50,7 @@ public class Reminders extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
         dialog = new ProgressDialog(this);
         dialog.setMessage("Just a Minute...");
+        createNotificationChannel();
 
         dialog.show();
 
@@ -176,6 +175,15 @@ public class Reminders extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                     dialog.dismiss();
                                     if (task.isSuccessful()) {
+                                        long nowTime = System.currentTimeMillis();
+                                        long tenSeconds = 1000 * 10;
+
+                                        Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
+                                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+
+                                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                        alarmManager.set(AlarmManager.RTC_WAKEUP, nowTime+tenSeconds, pendingIntent);
+
                                         Toast.makeText(Reminders.this, "Successfully Added.", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(Reminders.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -205,6 +213,7 @@ public class Reminders extends AppCompatActivity {
 
         setContentView(binding.getRoot());
     }
+
 
     private void allInvisible() {
         binding.textView15.setVisibility(View.INVISIBLE);
@@ -256,5 +265,19 @@ public class Reminders extends AppCompatActivity {
             }
         }
         return formattedTime;
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "MuscleFitReminderChannel";
+            String description = "Channel for Muscle Fit Reminder Notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("remind", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

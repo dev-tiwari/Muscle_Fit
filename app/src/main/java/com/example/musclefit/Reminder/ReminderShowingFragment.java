@@ -1,4 +1,4 @@
-package com.example.musclefit;
+package com.example.musclefit.Reminder;
 
 import android.os.Bundle;
 

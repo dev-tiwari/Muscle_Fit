@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.musclefit.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Main extends AppCompatActivity {
 

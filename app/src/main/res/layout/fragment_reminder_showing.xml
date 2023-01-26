@@ -4,43 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReminderShowingFragment">
+    tools:context=".Reminder.ReminderShowingFragment">
 
-    <TextView
-        android:id="@+id/reminderDays"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/aladin"
-        android:text="TextView"
-        android:textSize="24sp"
-        android:textStyle="bold"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleForReminder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:animateLayoutChanges="false"
+        app:layout_constraintBottom_toTopOf="@+id/changeReminder"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/reminderTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/aladin"
-        android:text="TextView"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/reminderDays"
-        app:layout_constraintStart_toStartOf="@+id/reminderDays"
-        app:layout_constraintTop_toBottomOf="@+id/reminderDays" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/changeReminder"
+        android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="@color/teal_700"
-        android:text="Delete and Change Reminder Time"
+        android:text="Change Reminder Time"
         app:cornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/reminderTime"
-        app:layout_constraintStart_toStartOf="@+id/reminderTime"
-        app:layout_constraintTop_toBottomOf="@+id/reminderTime" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycleForReminder" />
 </androidx.constraintlayout.widget.ConstraintLayout>

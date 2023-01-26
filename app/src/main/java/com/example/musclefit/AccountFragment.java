@@ -1,7 +1,5 @@
 package com.example.musclefit;
 
-import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.musclefit.Reminder.Reminders;
 import com.example.musclefit.databinding.FragmentAccountBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -120,12 +119,12 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        binding.reminders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), Reminders.class));
-            }
-        });
+//        binding.reminders.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), Reminders.class));
+//            }
+//        });
 
         binding.favourites.setOnClickListener(new View.OnClickListener() {
             @Override
