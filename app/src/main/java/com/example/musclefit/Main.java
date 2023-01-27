@@ -45,11 +45,13 @@ public class Main extends AppCompatActivity {
                         transaction.replace(binding.content.getId(), new DashboardFragment());
                         transaction.commit();
                         break;
-                    case R.id.item_2:
-                        Toast.makeText(Main.this, "Item 2 has been Selected.", Toast.LENGTH_SHORT).show();
+                    case R.id.plan:
+                        transaction.replace(binding.content.getId(), new PlanFragment());
+                        transaction.commit();
                         break;
-                    case R.id.item_3:
-                        Toast.makeText(Main.this, "Item 3 has been Selected.", Toast.LENGTH_SHORT).show();
+                    case R.id.workout:
+                        transaction.replace(binding.content.getId(), new WorkoutFragment());
+                        transaction.commit();
                         break;
                     case R.id.account:
                         transaction.replace(binding.content.getId(), new AccountFragment());
@@ -74,11 +76,13 @@ public class Main extends AppCompatActivity {
 //                                badge.setVisible(true);
 //                                badge.setNumber(99);
                         break;
-                    case R.id.item_2:
-                        Toast.makeText(Main.this, "Item 2 has been ReSelected.", Toast.LENGTH_SHORT).show();
+                    case R.id.plan:
+                        transaction.replace(binding.content.getId(), new PlanFragment());
+                        transaction.commit();
                         break;
-                    case R.id.item_3:
-                        Toast.makeText(Main.this, "Item 3 has been ReSelected.", Toast.LENGTH_SHORT).show();
+                    case R.id.workout:
+                        transaction.replace(binding.content.getId(), new WorkoutFragment());
+                        transaction.commit();
                         break;
                     case R.id.account:
                         transaction.replace(binding.content.getId(), new AccountFragment());
