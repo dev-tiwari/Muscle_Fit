@@ -23,6 +23,7 @@ public class ForgotPassword extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore database;
     ProgressDialog dialog;
+    int reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,16 @@ public class ForgotPassword extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Just a Minute...");
 
+        reset = getIntent().getIntExtra("reset", 0);
+
         setContentView(binding.getRoot());
+
+        if (reset == 1) {
+            binding.signIn.setVisibility(View.INVISIBLE);
+            binding.already.setVisibility(View.INVISIBLE);
+            binding.textView5.setVisibility(View.INVISIBLE);
+            binding.textView22.setVisibility(View.VISIBLE);
+        }
 
         binding.already.setOnClickListener(new View.OnClickListener() {
             @Override

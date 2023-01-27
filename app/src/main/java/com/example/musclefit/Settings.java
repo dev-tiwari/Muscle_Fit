@@ -84,7 +84,9 @@ public class Settings extends AppCompatActivity {
         binding.resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ForgotPassword.class));
+                Intent intent = new Intent(getApplicationContext(), ForgotPassword.class);
+                intent.putExtra("reset", 1);
+                startActivity(intent);
             }
         });
 
