@@ -4,7 +4,6 @@ public class User {
     private String name;
     private String email;
     private String phoneNumber;
-//    private String imageUrl;
     private String personalize;
     private String height;
     private String weight;
@@ -36,14 +35,6 @@ public class User {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-//    public String getImageUrl() {
-//        return imageUrl;
-//    }
-
-//    public void setImageUrl(String imageUrl) {
-//        this.imageUrl = imageUrl;
-//    }
 
     public String getPersonalize() {
         return personalize;
@@ -105,7 +96,6 @@ public class User {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-//        this.imageUrl = imageUrl;
         this.personalize = personalize;
         this.height = height;
         this.weight = weight;

@@ -1,5 +1,6 @@
 package com.example.musclefit;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,8 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.musclefit.databinding.FragmentWorkoutBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class WorkoutFragment extends Fragment {
 
@@ -29,8 +32,6 @@ public class WorkoutFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentWorkoutBinding.inflate(inflater, container, false);
-
-
 
         return binding.getRoot();
     }

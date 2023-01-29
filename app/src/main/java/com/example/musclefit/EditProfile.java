@@ -1,5 +1,9 @@
 package com.example.musclefit;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +20,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.musclefit.databinding.ActivityEditProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,11 +28,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
 
@@ -37,11 +49,9 @@ public class EditProfile extends AppCompatActivity {
     FirebaseAuth auth;
     ProgressDialog dialog;
     FirebaseFirestore database;
-    StorageReference storageReference;
-
-    private Uri imageUri;
-    private String myUri ="";
-    private StorageTask uploadTask;
+    FirebaseDatabase data;
+    FirebaseStorage storage;
+    ActivityResultLauncher<String> launcher;
 
     String name, email, phoneNumber, personalize, height, weight, age, gender, BMI, weightCategory;
 
@@ -53,7 +63,8 @@ public class EditProfile extends AppCompatActivity {
             dialog = new ProgressDialog(this);
             dialog.setMessage("Just a Minute...");
             database = FirebaseFirestore.getInstance();
-            storageReference = FirebaseStorage.getInstance().getReference().child("profilePic");
+            data = FirebaseDatabase.getInstance();
+            storage = FirebaseStorage.getInstance();
 
             setContentView(binding.getRoot());
 
@@ -258,7 +269,7 @@ public class EditProfile extends AppCompatActivity {
             });
         }
 
-        public void setFocus (boolean focus){
+    public void setFocus (boolean focus){
             if (focus) {
                 Objects.requireNonNull(binding.nameTextField.getEditText()).setFocusableInTouchMode(focus);
                 Objects.requireNonNull(binding.phoneNumberTextField.getEditText()).setFocusableInTouchMode(focus);
