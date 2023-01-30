@@ -2,18 +2,45 @@ package com.example.musclefit;
 
 public class ExerciseModel {
 
-    private String exerciseId, exerciseName, exerciseImage, timeTaken, state, exerciseType;
+    private String exerciseId, exerciseName, exerciseImage, timeTaken, state, exerciseType, description, calorieCount, equipmentsUsed;
 
-    public ExerciseModel(String exerciseId, String exerciseName, String exerciseImage, String timeTaken, String state, String exerciseType) {
+    public ExerciseModel(String exerciseId, String exerciseName, String exerciseImage, String timeTaken, String state, String exerciseType, String description, String calorieCount, String equipmentsUsed) {
         this.exerciseId = exerciseId;
         this.exerciseName = exerciseName;
         this.exerciseImage = exerciseImage;
         this.timeTaken = timeTaken;
         this.state = state;
         this.exerciseType = exerciseType;
+        this.description = description;
+        this.calorieCount = calorieCount;
+        this.equipmentsUsed = equipmentsUsed;
     }
 
     public ExerciseModel() {
+    }
+
+    public String getEquipmentsUsed() {
+        return equipmentsUsed;
+    }
+
+    public void setEquipmentsUsed(String equipmentsUsed) {
+        this.equipmentsUsed = equipmentsUsed;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCalorieCount() {
+        return calorieCount;
+    }
+
+    public void setCalorieCount(String calorieCount) {
+        this.calorieCount = calorieCount;
     }
 
     public String getExerciseType() {

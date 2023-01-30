@@ -51,7 +51,6 @@ public class EditProfile extends AppCompatActivity {
     FirebaseFirestore database;
     FirebaseDatabase data;
     FirebaseStorage storage;
-    ActivityResultLauncher<String> launcher;
 
     String name, email, phoneNumber, personalize, height, weight, age, gender, BMI, weightCategory;
 

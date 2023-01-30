@@ -17,6 +17,9 @@
         android:theme="@style/Theme.MuscleFit"
         tools:targetApi="31">
         <activity
+            android:name=".ExerciseInformationActivity"
+            android:exported="false" />
+        <activity
             android:name=".VideoShowingActivity"
             android:exported="false" />
         <activity
