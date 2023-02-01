@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/exImage"
+                android:id="@+id/exerImage"
                 android:layout_width="300dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"

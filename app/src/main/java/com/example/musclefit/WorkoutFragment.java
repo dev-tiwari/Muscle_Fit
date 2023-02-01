@@ -83,11 +83,11 @@ public class WorkoutFragment extends Fragment {
                         for (DocumentSnapshot snapshot : value.getDocuments()) {
                             ExerciseModel model = snapshot.toObject(ExerciseModel.class);
                             model.setExerciseId(snapshot.getId());
-                            if (model.getExerciseType().equals("abs")) {
+                            if (model.getExerciseType().contains("abs")) {
                                 absExercises.add(model);
-                            } else if (model.getExerciseType().equals("legs")) {
+                            } else if (model.getExerciseType().contains("legs")) {
                                 legsExercises.add(model);
-                            } else if (model.getExerciseType().equals("fat burning")) {
+                            } else if (model.getExerciseType().contains("fat burning")) {
                                 fatExercises.add(model);
                             }
                         }

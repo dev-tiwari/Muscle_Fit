@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,7 +72,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ExerciseInformationActivity.class);
+                Intent intent = new Intent(context, WorkoutInformationActivity.class);
                 intent.putExtra("exId", model.getExerciseId());
                 context.startActivity(intent);
             }
@@ -130,7 +129,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
         public ExerciseViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.exImage);
+            image = itemView.findViewById(R.id.exerImage);
             exName = itemView.findViewById(R.id.exName);
             timeTaken = itemView.findViewById(R.id.timeTaken);
             state = itemView.findViewById(R.id.exState);

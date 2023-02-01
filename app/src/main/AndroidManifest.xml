@@ -20,6 +20,9 @@
             android:name=".ExerciseInformationActivity"
             android:exported="false" />
         <activity
+            android:name=".WorkoutInformationActivity"
+            android:exported="false" />
+        <activity
             android:name=".VideoShowingActivity"
             android:exported="false" />
         <activity
