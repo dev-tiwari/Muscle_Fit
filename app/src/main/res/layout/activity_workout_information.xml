@@ -67,6 +67,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="40dp"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1.5"
+                        android:shadowDy="1.3"
+                        android:shadowRadius="1.6"
                         android:text="Calorie"
                         android:textColor="@color/white"
                         android:textSize="16sp"
@@ -79,6 +83,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
                         android:text="Time"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1.5"
+                        android:shadowDy="1.3"
+                        android:shadowRadius="1.6"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -93,6 +101,10 @@
                         android:layout_marginBottom="40dp"
                         android:text="Level"
                         android:textColor="@color/white"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1.5"
+                        android:shadowDy="1.3"
+                        android:shadowRadius="1.6"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
@@ -104,6 +116,10 @@
                         android:layout_marginTop="4dp"
                         android:text="TextView"
                         android:textColor="@color/white"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1.5"
+                        android:shadowDy="1.3"
+                        android:shadowRadius="1.6"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/textView30"
                         app:layout_constraintStart_toStartOf="@+id/textView30"
@@ -115,6 +131,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="TextView"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1.5"
+                        android:shadowDy="1.3"
+                        android:shadowRadius="1.6"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/textView31"
@@ -127,6 +147,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="TextView"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1.5"
+                        android:shadowDy="1.3"
+                        android:shadowRadius="1.6"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/textView34"
@@ -220,127 +244,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/exercisesCount" />
 
-            <TextView
-                android:id="@+id/textView28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Warm Up"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/textView42"
-                app:layout_constraintTop_toBottomOf="@+id/textView42" />
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/warmUpExercises"
+                android:id="@+id/workoutExercises"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView28">
+                app:layout_constraintTop_toBottomOf="@+id/textView42">
 
             </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:id="@+id/textView32"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Circuit 1"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/warmUpExercises" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/circuit1Exercises"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView32" />
-
-            <TextView
-                android:id="@+id/textView33"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Circuit 2"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/textView32"
-                app:layout_constraintTop_toBottomOf="@+id/circuit1Exercises" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/circuit2Exercises"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView33" />
-
-            <TextView
-                android:id="@+id/textView35"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Circuit 3"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/textView33"
-                app:layout_constraintTop_toBottomOf="@+id/circuit2Exercises" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/circuit3Exercises"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView35" />
-
-            <TextView
-                android:id="@+id/textView36"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Cool Down"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/textView35"
-                app:layout_constraintTop_toBottomOf="@+id/circuit3Exercises" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/coolDownExercises"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

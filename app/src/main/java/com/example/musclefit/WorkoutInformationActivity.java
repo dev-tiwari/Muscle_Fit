@@ -30,7 +30,6 @@ public class WorkoutInformationActivity extends AppCompatActivity {
     String exId;
     FirebaseFirestore database;
     ProgressDialog dialog;
-    int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,83 +72,28 @@ public class WorkoutInformationActivity extends AppCompatActivity {
                 });
 
         ArrayList<WorkoutListHelper> exercises = new ArrayList<>();
-//        ArrayList<ExerciseModel> coolDown = new ArrayList<>();
-//        ArrayList<ExerciseModel> circuit1 = new ArrayList<>();
-//        ArrayList<ExerciseModel> circuit2 = new ArrayList<>();
-//        ArrayList<ExerciseModel> circuit3 = new ArrayList<>();
 
-        DoingExerciseAdapter exerciseAdapter = new DoingExerciseAdapter(getApplicationContext(), exercises);
-//        DoingExerciseAdapter coolDownAdapter = new DoingExerciseAdapter(getApplicationContext(), coolDown);
-//        DoingExerciseAdapter circuit1Adapter = new DoingExerciseAdapter(getApplicationContext(), circuit1);
-//        DoingExerciseAdapter circuit2Adapter = new DoingExerciseAdapter(getApplicationContext(), circuit2);
-//        DoingExerciseAdapter circuit3Adapter = new DoingExerciseAdapter(getApplicationContext(), circuit3);
+        DoingExerciseAdapter exerciseAdapter = new DoingExerciseAdapter(getApplicationContext(), exercises);;
 
         database.collection("exercises")
                 .document(exId)
                 .collection("list")
+                .orderBy("index")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         exercises.clear();
-//                        coolDown.clear();
-//                        circuit1.clear();
-//                        circuit2.clear();
-//                        circuit3.clear();
                         for (DocumentSnapshot snapshot : value.getDocuments()) {
                             WorkoutListHelper model = snapshot.toObject(WorkoutListHelper.class);
                             model.setId(snapshot.getId());
-//                            if (model.getExerciseType() != null) {
-//                                if (model.getExerciseType().toLowerCase().contains("warm up")) {
-                                    exercises.add(model);
-//                                    i += 1;
-                                    binding.warmUpExercises.setVisibility(View.VISIBLE);
-                                    binding.textView28.setVisibility(View.VISIBLE);
-//                                } else if (model.getExerciseType().toLowerCase().contains("cool down")) {
-//                                    coolDown.add(model);
-//                                    i += 1;
-//                                    binding.coolDownExercises.setVisibility(View.VISIBLE);
-//                                    binding.textView36.setVisibility(View.VISIBLE);
-//                                } else if (model.getExerciseType().toLowerCase().contains("circuit1")) {
-//                                    circuit1.add(model);
-//                                    i += 1;
-//                                    binding.circuit1Exercises.setVisibility(View.VISIBLE);
-//                                    binding.textView32.setVisibility(View.VISIBLE);
-//                                } else if (model.getExerciseType().toLowerCase().contains("circuit2")) {
-//                                    circuit2.add(model);
-//                                    i += 1;
-//                                    binding.circuit2Exercises.setVisibility(View.VISIBLE);
-//                                    binding.textView33.setVisibility(View.VISIBLE);
-//                                } else if (model.getExerciseType().toLowerCase().contains("circuit3")) {
-//                                    circuit3.add(model);
-//                                    i += 1;
-//                                    binding.circuit3Exercises.setVisibility(View.VISIBLE);
-//                                    binding.textView35.setVisibility(View.VISIBLE);
-//                                }
-//                                String size = String.valueOf(i);
-//                                binding.exercisesCount.setText(size);
-//                            }
+                            exercises.add(model);
                         }
+                        binding.exercisesCount.setText(String.valueOf(exercises.size()));
                         exerciseAdapter.notifyDataSetChanged();
-//                        coolDownAdapter.notifyDataSetChanged();
-//                        circuit1Adapter.notifyDataSetChanged();
-//                        circuit2Adapter.notifyDataSetChanged();
-//                        circuit3Adapter.notifyDataSetChanged();
                     }
                 });
 
-        binding.warmUpExercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        binding.warmUpExercises.setAdapter(exerciseAdapter);
-
-//        binding.circuit1Exercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-//        binding.circuit1Exercises.setAdapter(circuit1Adapter);
-//
-//        binding.circuit2Exercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-//        binding.circuit2Exercises.setAdapter(circuit2Adapter);
-//
-//        binding.circuit3Exercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-//        binding.circuit3Exercises.setAdapter(circuit3Adapter);
-//
-//        binding.coolDownExercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-//        binding.coolDownExercises.setAdapter(coolDownAdapter);
+        binding.workoutExercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        binding.workoutExercises.setAdapter(exerciseAdapter);
     }
 }
