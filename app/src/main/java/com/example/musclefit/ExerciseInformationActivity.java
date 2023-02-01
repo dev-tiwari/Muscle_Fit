@@ -41,9 +41,7 @@ public class ExerciseInformationActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         exId = prefs.getString("exerciseId", null);
 
-        database.collection("exercises")
-                .document(exId)
-                .collection("list")
+        database.collection("workoutsList")
                 .document(inId)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -67,9 +65,7 @@ public class ExerciseInformationActivity extends AppCompatActivity {
 
         ShowingExerciseStepsAdapter adapter = new ShowingExerciseStepsAdapter(this, list);
 
-        database.collection("exercises")
-                .document(exId)
-                .collection("list")
+        database.collection("workoutsList")
                 .document(inId)
                 .collection("steps")
                 .orderBy("index")

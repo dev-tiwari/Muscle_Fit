@@ -8,12 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -21,11 +25,12 @@ import java.util.ArrayList;
 public class DoingExerciseAdapter extends RecyclerView.Adapter<DoingExerciseAdapter.DoingExerciseViewHolder> {
 
     Context context;
-    ArrayList<ExerciseModel> exerciseModels;
+    ArrayList<WorkoutListHelper> workoutModels;
+    FirebaseFirestore database;
 
-    public DoingExerciseAdapter(Context context, ArrayList<ExerciseModel> exerciseModels) {
+    public DoingExerciseAdapter(Context context, ArrayList<WorkoutListHelper> workoutModels) {
         this.context = context;
-        this.exerciseModels = exerciseModels;
+        this.workoutModels = workoutModels;
     }
 
     @NonNull
@@ -37,19 +42,35 @@ public class DoingExerciseAdapter extends RecyclerView.Adapter<DoingExerciseAdap
 
     @Override
     public void onBindViewHolder(@NonNull DoingExerciseViewHolder holder, int position) {
-        ExerciseModel model = exerciseModels.get(position);
+        database = FirebaseFirestore.getInstance();
+        WorkoutListHelper model = workoutModels.get(position);
 
-        holder.exName.setText(model.getExerciseName());
-        holder.time.setText(model.getTimeTaken());
-        holder.equip.setText(model.getEquipmentsUsed());
-        Glide.with(context).load(model.getExerciseImage()).into(holder.image);
+        String id = model.getExId();
+
+        database.collection("workoutsList")
+                        .document(id)
+                                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ExerciseModel mode = documentSnapshot.toObject(ExerciseModel.class);
+                        holder.exName.setText(mode.getExerciseName());
+                        holder.time.setText(mode.getTimeTaken());
+                        holder.equip.setText(mode.getEquipmentsUsed());
+                        Glide.with(context).load(mode.getExerciseImage()).into(holder.image);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ExerciseInformationActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("id", model.getExerciseId());
+                intent.putExtra("id", id);
                 context.startActivity(intent);
             }
         });
@@ -57,7 +78,7 @@ public class DoingExerciseAdapter extends RecyclerView.Adapter<DoingExerciseAdap
 
     @Override
     public int getItemCount() {
-        return exerciseModels.size();
+        return workoutModels.size();
     }
 
     public class DoingExerciseViewHolder extends RecyclerView.ViewHolder {

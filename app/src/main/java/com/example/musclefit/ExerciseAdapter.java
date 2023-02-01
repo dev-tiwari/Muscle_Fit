@@ -16,11 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -83,25 +87,50 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
             public boolean onLongClick(View view) {
                 new MaterialAlertDialogBuilder(context)
                         .setTitle("Favourites")
-                        .setMessage("Add to Favourites")
+                        .setMessage("Add to Favourites. The workout will be added to favourites.")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                final boolean[] flag = {true};
                                 dialog.show();
-
-                                FavouriteHelper helper = new FavouriteHelper(model.getExerciseId());
                                 database.collection("users")
                                         .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                                         .collection("favourites")
-                                        .add(helper).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                             @Override
-                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                                 dialog.dismiss();
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(context, "Successfully Added to Favourites.", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    Toast.makeText(context, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                                for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                                    FavouriteHelper help = snapshot.toObject(FavouriteHelper.class);
+                                                    if (model.getExerciseId().equals(help.getExId())){
+                                                        Toast.makeText(context, "Already in Favourites.", Toast.LENGTH_SHORT).show();
+                                                        flag[0] = false;
+                                                        break;
+                                                    }
                                                 }
+                                                if (flag[0]) {
+                                                    FavouriteHelper helper = new FavouriteHelper(model.getExerciseId());
+                                                    database.collection("users")
+                                                            .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                                                            .collection("favourites")
+                                                            .add(helper).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                                    dialog.dismiss();
+                                                                    if (task.isSuccessful()) {
+                                                                        Toast.makeText(context, "Successfully Added to Favourites.", Toast.LENGTH_SHORT).show();
+                                                                    } else {
+                                                                        Toast.makeText(context, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            });
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                dialog.dismiss();
+                                                Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }
@@ -135,5 +164,6 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
             state = itemView.findViewById(R.id.exState);
         }
     }
+
 }
 

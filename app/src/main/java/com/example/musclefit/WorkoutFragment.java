@@ -1,6 +1,8 @@
 package com.example.musclefit;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class WorkoutFragment extends Fragment {
 
@@ -108,6 +111,13 @@ public class WorkoutFragment extends Fragment {
 
         binding.exercisesFat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.exercisesFat.setAdapter(fatAdapter);
+
+        binding.fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Favourites.class));
+            }
+        });
 
         return binding.getRoot();
     }

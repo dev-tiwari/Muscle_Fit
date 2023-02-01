@@ -1,17 +1,20 @@
 package com.example.musclefit;
 
-public class FavouriteHelper {
+public class WorkoutListHelper {
 
-    private String id;
-    private String exId;
+    String id;
+    String exId;
 
-    public FavouriteHelper(String id, String exId) {
+    public WorkoutListHelper(String id, String exId) {
         this.id = id;
         this.exId = exId;
     }
 
-    public FavouriteHelper(String exId) {
+    public WorkoutListHelper(String exId) {
         this.exId = exId;
+    }
+
+    public WorkoutListHelper() {
     }
 
     public String getId() {
@@ -28,8 +31,5 @@ public class FavouriteHelper {
 
     public void setExId(String exId) {
         this.exId = exId;
-    }
-
-    public FavouriteHelper() {
     }
 }
