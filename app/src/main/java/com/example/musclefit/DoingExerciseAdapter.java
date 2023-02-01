@@ -22,9 +22,6 @@ public class DoingExerciseAdapter extends RecyclerView.Adapter<DoingExerciseAdap
 
     Context context;
     ArrayList<ExerciseModel> exerciseModels;
-    ProgressDialog dialog;
-    FirebaseFirestore database;
-    FirebaseAuth auth;
 
     public DoingExerciseAdapter(Context context, ArrayList<ExerciseModel> exerciseModels) {
         this.context = context;
@@ -41,10 +38,6 @@ public class DoingExerciseAdapter extends RecyclerView.Adapter<DoingExerciseAdap
     @Override
     public void onBindViewHolder(@NonNull DoingExerciseViewHolder holder, int position) {
         ExerciseModel model = exerciseModels.get(position);
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseFirestore.getInstance();
-        dialog = new ProgressDialog(context);
-        dialog.setMessage("Just a Minute...");
 
         holder.exName.setText(model.getExerciseName());
         holder.time.setText(model.getTimeTaken());
