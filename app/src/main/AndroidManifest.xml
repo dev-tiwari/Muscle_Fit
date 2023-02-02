@@ -17,91 +17,94 @@
         android:theme="@style/Theme.MuscleFit"
         tools:targetApi="31">
         <activity
-            android:name=".ExerciseInformationActivity"
+            android:name=".Activities.ExploreAllWorkoutsActivity"
             android:exported="false" />
         <activity
-            android:name=".WorkoutInformationActivity"
+            android:name=".Activities.ExerciseInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".VideoShowingActivity"
+            android:name=".Activities.WorkoutInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".Favourites"
+            android:name=".Activities.VideoShowingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Favourites"
             android:exported="false" />
         <activity
             android:name=".Reminder.Reminders"
             android:exported="false" />
         <activity
-            android:name=".MyInformation"
+            android:name=".Activities.MyInformation"
             android:exported="false" />
         <activity
-            android:name=".UpdatePassword"
+            android:name=".Activities.UpdatePassword"
             android:exported="false" />
         <activity
-            android:name=".EditProfile"
+            android:name=".Activities.EditProfile"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Settings"
+            android:name=".Activities.Settings"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Main"
+            android:name=".Activities.Main"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SomeMoreInformation"
+            android:name=".Activities.SomeMoreInformation"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ForgotPassword"
+            android:name=".Activities.ForgotPassword"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUp"
+            android:name=".Activities.SignUp"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignIn"
+            android:name=".Activities.SignIn"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".StartPanel"
+            android:name=".Activities.StartPanel"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SetGoals"
+            android:name=".Activities.SetGoals"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SplashScreen"
+            android:name=".Activities.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
