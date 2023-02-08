@@ -272,5 +272,5 @@ public class EditProfile extends AppCompatActivity {
                 Objects.requireNonNull(binding.genderEdit.getEditText()).setFocusable(focus);
                 Objects.requireNonNull(binding.personalizeEdit.getEditText()).setFocusable(focus);
             }
-        }
+    }
 }

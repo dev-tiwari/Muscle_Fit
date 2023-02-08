@@ -4,10 +4,12 @@ public class WorkoutListHelper {
 
     String id;
     String exId;
+    String exerciseType;
 
-    public WorkoutListHelper(String id, String exId) {
+    public WorkoutListHelper(String id, String exId, String exerciseType) {
         this.id = id;
         this.exId = exId;
+        this.exerciseType = exerciseType;
     }
 
     public WorkoutListHelper(String exId) {
@@ -15,6 +17,14 @@ public class WorkoutListHelper {
     }
 
     public WorkoutListHelper() {
+    }
+
+    public String getExerciseType() {
+        return exerciseType;
+    }
+
+    public void setExerciseType(String exerciseType) {
+        this.exerciseType = exerciseType;
     }
 
     public String getId() {

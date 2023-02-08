@@ -81,36 +81,20 @@ public class ExploreAllWorkoutsActivity extends AppCompatActivity {
                                 model.setExerciseId(snapshot.getId());
                                 if (model.getExerciseType().contains("fat burning")) {
                                     fatBurning.add(model);
-                                    binding.textView33.setVisibility(View.VISIBLE);
-                                    binding.fatWorkouts.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("abs")) {
                                     abs.add(model);
-                                    binding.textView35.setVisibility(View.VISIBLE);
-                                    binding.absWorkout.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("chest")) {
                                     chest.add(model);
-                                    binding.textView39.setVisibility(View.VISIBLE);
-                                    binding.chestWorkout.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("legs")) {
                                     legs.add(model);
-                                    binding.textView41.setVisibility(View.VISIBLE);
-                                    binding.legsWorkouts.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("arms")) {
                                     arms.add(model);
-                                    binding.textView45.setVisibility(View.VISIBLE);
-                                    binding.armsWorkouts.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("back")) {
                                     back.add(model);
-                                    binding.textView47.setVisibility(View.VISIBLE);
-                                    binding.backWorkouts.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("shoulder")) {
                                     shoulder.add(model);
-                                    binding.textView48.setVisibility(View.VISIBLE);
-                                    binding.shoulderWorkouts.setVisibility(View.VISIBLE);
                                 } else {
                                     other.add(model);
-                                    binding.textView49.setVisibility(View.VISIBLE);
-                                    binding.otherWorkouts.setVisibility(View.VISIBLE);
                                 }
                                 fatAdapter.notifyDataSetChanged();
                                 absAdapter.notifyDataSetChanged();
@@ -194,36 +178,20 @@ public class ExploreAllWorkoutsActivity extends AppCompatActivity {
                                 model.setExerciseId(snapshot.getId());
                                 if (model.getExerciseType().contains("fat burning")) {
                                     fatBurning.add(model);
-                                    binding.textView33.setVisibility(View.VISIBLE);
-                                    binding.fatWorkouts.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("abs")) {
                                     abs.add(model);
-                                    binding.textView35.setVisibility(View.VISIBLE);
-                                    binding.absWorkout.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("chest")) {
                                     chest.add(model);
-                                    binding.textView39.setVisibility(View.VISIBLE);
-                                    binding.chestWorkout.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("legs")) {
                                     legs.add(model);
-                                    binding.textView41.setVisibility(View.VISIBLE);
-                                    binding.legsWorkouts.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("arms")) {
                                     arms.add(model);
-                                    binding.textView45.setVisibility(View.VISIBLE);
-                                    binding.armsWorkouts.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("back")) {
                                     back.add(model);
-                                    binding.textView47.setVisibility(View.VISIBLE);
-                                    binding.backWorkouts.setVisibility(View.VISIBLE);
                                 } else if (model.getExerciseType().contains("shoulder")) {
                                     shoulder.add(model);
-                                    binding.textView48.setVisibility(View.VISIBLE);
-                                    binding.shoulderWorkouts.setVisibility(View.VISIBLE);
                                 } else {
                                     other.add(model);
-                                    binding.textView49.setVisibility(View.VISIBLE);
-                                    binding.otherWorkouts.setVisibility(View.VISIBLE);
                                 }
                                 fatAdapter.notifyDataSetChanged();
                                 absAdapter.notifyDataSetChanged();

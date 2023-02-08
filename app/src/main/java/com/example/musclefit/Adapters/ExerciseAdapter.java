@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.musclefit.User_Helper_Classes.ExerciseModel;
+import com.example.musclefit.User_Helper_Classes.FavHelper;
 import com.example.musclefit.User_Helper_Classes.FavouriteHelper;
 import com.example.musclefit.R;
 import com.example.musclefit.Activities.WorkoutInformationActivity;
@@ -118,7 +119,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
                                                     }
                                                 }
                                                 if (flag[0]) {
-                                                    FavouriteHelper helper = new FavouriteHelper(model.getExerciseId());
+                                                    FavHelper helper = new FavHelper(model.getExerciseId());
                                                     database.collection("users")
                                                             .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                                                             .collection("favourites")
@@ -164,7 +165,6 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         TextView exName;
         TextView timeTaken;
         TextView state;
-        TextView level;
 
         public ExerciseViewHolder(@NonNull View itemView) {
             super(itemView);

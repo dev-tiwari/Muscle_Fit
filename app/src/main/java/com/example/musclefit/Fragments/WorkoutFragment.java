@@ -12,12 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.musclefit.Adapters.ExerciseAdapter;
 import com.example.musclefit.User_Helper_Classes.ExerciseModel;
 import com.example.musclefit.Activities.ExploreAllWorkoutsActivity;
 import com.example.musclefit.Activities.Favourites;
+import com.example.musclefit.User_Helper_Classes.User;
 import com.example.musclefit.databinding.FragmentWorkoutBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class WorkoutFragment extends Fragment {
 
@@ -39,13 +45,16 @@ public class WorkoutFragment extends Fragment {
 
     FragmentWorkoutBinding binding;
     FirebaseFirestore database;
+    FirebaseAuth auth;
     ProgressDialog dialog;
+    String personalize;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentWorkoutBinding.inflate(inflater, container, false);
+        auth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Just a Minute...");
@@ -55,23 +64,116 @@ public class WorkoutFragment extends Fragment {
         ArrayList<ExerciseModel> absExercises = new ArrayList<>();
         ArrayList<ExerciseModel> legsExercises = new ArrayList<>();
         ArrayList<ExerciseModel> fatExercises = new ArrayList<>();
+        ArrayList<ExerciseModel> arms = new ArrayList<>();
+        ArrayList<ExerciseModel> chest = new ArrayList<>();
 
         ExerciseAdapter absAdapter = new ExerciseAdapter(getContext(), absExercises);
         ExerciseAdapter legsAdapter = new ExerciseAdapter(getContext(), legsExercises);
         ExerciseAdapter topAdapter = new ExerciseAdapter(getContext(), topExercises);
         ExerciseAdapter fatAdapter = new ExerciseAdapter(getContext(), fatExercises);
+        ExerciseAdapter armsAdapter = new ExerciseAdapter(getContext(), arms);
+        ExerciseAdapter chestAdapter = new ExerciseAdapter(getContext(), chest);
 
-        database.collection("exercises")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+        database.collection("users")
+                        .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        topExercises.clear();
-                        for (DocumentSnapshot snapshot : value.getDocuments()) {
-                            ExerciseModel model = snapshot.toObject(ExerciseModel.class);
-                            model.setExerciseId(snapshot.getId());
-                            topExercises.add(model);
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        User user = documentSnapshot.toObject(User.class);
+                        if (Objects.requireNonNull(user).getPersonalize() != null) {
+                            personalize = user.getPersonalize();
+                        } else {
+                            personalize = "Build Muscles";
                         }
-                        topAdapter.notifyDataSetChanged();
+                        if (!personalize.equals("")) {
+                            if (personalize.equalsIgnoreCase("To be More Active")) {
+                                database.collection("exercises")
+                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                dialog.dismiss();
+                                                topExercises.clear();
+                                                for (DocumentSnapshot snapshot : value.getDocuments()) {
+                                                    ExerciseModel model = snapshot.toObject(ExerciseModel.class);
+                                                    model.setExerciseId(snapshot.getId());
+                                                    if (model.getExerciseType().contains("fat burning") && model.getState().equalsIgnoreCase("K1")) {
+                                                        topExercises.add(model);
+                                                    }
+                                                }
+                                                topAdapter.notifyDataSetChanged();
+                                            }
+                                        });
+                            } else if (personalize.equalsIgnoreCase("Build Muscles")) {
+                                database.collection("exercises")
+                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                dialog.dismiss();
+                                                topExercises.clear();
+                                                for (DocumentSnapshot snapshot : value.getDocuments()) {
+                                                    ExerciseModel model = snapshot.toObject(ExerciseModel.class);
+                                                    model.setExerciseId(snapshot.getId());
+                                                    if (model.getState().contains("K2")) {
+                                                        topExercises.add(model);
+                                                    }
+                                                }
+                                                topAdapter.notifyDataSetChanged();
+                                            }
+                                        });
+                            } else if (personalize.equalsIgnoreCase("To Lose Weight")) {
+                                database.collection("exercises")
+                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                dialog.dismiss();
+                                                topExercises.clear();
+                                                for (DocumentSnapshot snapshot : value.getDocuments()) {
+                                                    ExerciseModel model = snapshot.toObject(ExerciseModel.class);
+                                                    model.setExerciseId(snapshot.getId());
+                                                    if (model.getExerciseType().contains("fat burning") && model.getState().contains("K3")) {
+                                                        topExercises.add(model);
+                                                    }
+                                                }
+                                                topAdapter.notifyDataSetChanged();
+                                            }
+                                        });
+                            } else {
+                                database.collection("exercises")
+                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                dialog.dismiss();
+                                                topExercises.clear();
+                                                for (DocumentSnapshot snapshot : value.getDocuments()) {
+                                                    ExerciseModel model = snapshot.toObject(ExerciseModel.class);
+                                                    model.setExerciseId(snapshot.getId());
+                                                    topExercises.add(model);
+                                                }
+                                                topAdapter.notifyDataSetChanged();
+                                            }
+                                        });
+                            }
+                        } else {
+                            database.collection("exercises")
+                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                            dialog.dismiss();
+                                            topExercises.clear();
+                                            for (DocumentSnapshot snapshot : value.getDocuments()) {
+                                                ExerciseModel model = snapshot.toObject(ExerciseModel.class);
+                                                model.setExerciseId(snapshot.getId());
+                                                topExercises.add(model);
+                                            }
+                                            topAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+                        }
+                        }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -79,10 +181,12 @@ public class WorkoutFragment extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        dialog.dismiss();
+//                        dialog.dismiss();
                         legsExercises.clear();
                         absExercises.clear();
                         fatExercises.clear();
+                        chest.clear();
+                        arms.clear();
                         for (DocumentSnapshot snapshot : value.getDocuments()) {
                             ExerciseModel model = snapshot.toObject(ExerciseModel.class);
                             model.setExerciseId(snapshot.getId());
@@ -92,11 +196,17 @@ public class WorkoutFragment extends Fragment {
                                 legsExercises.add(model);
                             } else if (model.getExerciseType().contains("fat burning")) {
                                 fatExercises.add(model);
+                            } else if (model.getExerciseType().contains("chest")) {
+                                chest.add(model);
+                            } else if (model.getExerciseType().contains("arms")) {
+                                arms.add(model);
                             }
                         }
                         absAdapter.notifyDataSetChanged();
                         legsAdapter.notifyDataSetChanged();
                         fatAdapter.notifyDataSetChanged();
+                        chestAdapter.notifyDataSetChanged();
+                        armsAdapter.notifyDataSetChanged();
                     }
                 });
 
@@ -111,6 +221,13 @@ public class WorkoutFragment extends Fragment {
 
         binding.exercisesFat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.exercisesFat.setAdapter(fatAdapter);
+
+        binding.chestRecycle.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.chestRecycle.setAdapter(chestAdapter);
+
+        binding.armsRecycle.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.armsRecycle.setAdapter(armsAdapter);
+
 
         binding.fav.setOnClickListener(new View.OnClickListener() {
             @Override

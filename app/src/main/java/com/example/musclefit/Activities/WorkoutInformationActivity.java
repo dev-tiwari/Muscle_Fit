@@ -69,13 +69,18 @@ public class WorkoutInformationActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
                         Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        ArrayList<WorkoutListHelper> exercises = new ArrayList<>();
+        ArrayList<WorkoutListHelper> warmUpExercises = new ArrayList<>();
+        ArrayList<WorkoutListHelper> circuitExercises = new ArrayList<>();
+        ArrayList<WorkoutListHelper> coolDownExercises = new ArrayList<>();
 
-        DoingExerciseAdapter exerciseAdapter = new DoingExerciseAdapter(getApplicationContext(), exercises);;
+        DoingExerciseAdapter warmUpAdapter = new DoingExerciseAdapter(getApplicationContext(), warmUpExercises);
+        DoingExerciseAdapter circuitAdapter = new DoingExerciseAdapter(getApplicationContext(), circuitExercises);
+        DoingExerciseAdapter coolDownAdapter = new DoingExerciseAdapter(getApplicationContext(), coolDownExercises);
 
         database.collection("exercises")
                 .document(exId)
@@ -84,18 +89,34 @@ public class WorkoutInformationActivity extends AppCompatActivity {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        exercises.clear();
+                        warmUpExercises.clear();
+                        circuitExercises.clear();
+                        coolDownExercises.clear();
                         for (DocumentSnapshot snapshot : value.getDocuments()) {
                             WorkoutListHelper model = snapshot.toObject(WorkoutListHelper.class);
                             model.setId(snapshot.getId());
-                            exercises.add(model);
+                                if (model.getExerciseType().contains("warm up")) {
+                                    warmUpExercises.add(model);
+                                } else if (model.getExerciseType().contains("cool down")) {
+                                    coolDownExercises.add(model);
+                                } else {
+                                    circuitExercises.add(model);
+                                }
                         }
-                        binding.exercisesCount.setText(String.valueOf(exercises.size()));
-                        exerciseAdapter.notifyDataSetChanged();
+                        binding.exercisesCount.setText(String.valueOf(warmUpExercises.size() + circuitExercises.size() + coolDownExercises.size()));
+                        warmUpAdapter.notifyDataSetChanged();
+                        circuitAdapter.notifyDataSetChanged();
+                        coolDownAdapter.notifyDataSetChanged();
                     }
                 });
 
-        binding.workoutExercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        binding.workoutExercises.setAdapter(exerciseAdapter);
+        binding.warmUpExercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        binding.warmUpExercises.setAdapter(warmUpAdapter);
+
+        binding.circuitExercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        binding.circuitExercises.setAdapter(circuitAdapter);
+
+        binding.coolDownExercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        binding.coolDownExercises.setAdapter(coolDownAdapter);
     }
 }

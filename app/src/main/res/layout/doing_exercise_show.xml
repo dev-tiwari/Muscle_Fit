@@ -65,4 +65,5 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/timeExercise"
         app:layout_constraintTop_toTopOf="@+id/timeExercise" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

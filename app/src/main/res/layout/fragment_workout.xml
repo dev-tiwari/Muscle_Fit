@@ -9,27 +9,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/aladin"
-        android:text="WORKOUTS"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/fav"
-            style="@style/Widget.Material3.Button.IconButton.Outlined"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/aladin"
+            android:text="WORKOUTS"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/fav"
+            style="@style/Widget.Material3.Button.TextButton.Dialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Favourites"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
@@ -45,11 +45,12 @@
 
         <Button
             android:id="@+id/exploreWorkouts"
-            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            style="@style/Widget.Material3.Button.TextButton.Dialog"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Explore All Workouts"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
@@ -65,11 +66,12 @@
 
         <Button
             android:id="@+id/exerciseLibrary"
-            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Exercise Library"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
@@ -83,17 +85,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/exploreWorkouts" />
 
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/aladin"
-        android:text="Top Picks"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/exerciseLibrary"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseLibrary" />
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/aladin"
+            android:text="Suggested For You"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/exerciseLibrary"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseLibrary" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contentTopPicks"
@@ -114,7 +117,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/aladin"
             android:text="Abs Ripper Workouts"
-            android:textSize="34sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/contentTopPicks"
             app:layout_constraintTop_toBottomOf="@+id/contentTopPicks" />
@@ -138,7 +141,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/aladin"
             android:text="Legs Exercises"
-            android:textSize="34sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/absRecyclerView"
             app:layout_constraintTop_toBottomOf="@+id/absRecyclerView" />
@@ -162,7 +165,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/aladin"
             android:text="Fat Burning - Cardio"
-            android:textSize="34sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/absRecyclerView"
             app:layout_constraintTop_toBottomOf="@+id/exercisesLegs" />
@@ -177,6 +180,48 @@
             app:layout_constraintTop_toBottomOf="@+id/textView24">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textView50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/aladin"
+            android:text="Chest Stretching"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView24"
+            app:layout_constraintTop_toBottomOf="@+id/exercisesFat" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chestRecycle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView50" />
+
+        <TextView
+            android:id="@+id/textView51"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/aladin"
+            android:text="Arms Strengthening"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView50"
+            app:layout_constraintTop_toBottomOf="@+id/chestRecycle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/armsRecycle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
