@@ -66,9 +66,9 @@ public class SignUp extends AppCompatActivity {
                     binding.phoneNumber.setError("This field cannot be empty.");
                 } else if (pass.isEmpty() || pass.length() < 6) {
                     binding.password.setError("Password Length Should Exceed 6 Characters!");
-                }else if (confirmPass.isEmpty() || confirmPass.length() < 6 ) {
+                } else if (confirmPass.isEmpty() || confirmPass.length() < 6 ) {
                     binding.confirmPassword.setError("Password Length Should Exceed 6 Characters!");
-                }else if (!confirmPass.equals(pass)) {
+                } else if (!confirmPass.equals(pass)) {
                     binding.confirmPassword.setError("Password does not Match!");
                 } else {
                     final User user = new User(name, email, phoneNumber);

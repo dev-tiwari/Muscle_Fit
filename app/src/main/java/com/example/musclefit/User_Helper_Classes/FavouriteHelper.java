@@ -4,10 +4,12 @@ public class FavouriteHelper {
 
     private String id;
     private String exId;
+    private String type;
 
-    public FavouriteHelper(String id, String exId) {
+    public FavouriteHelper(String id, String exId, String type) {
         this.id = id;
         this.exId = exId;
+        this.type = type;
     }
 
     public FavouriteHelper(String exId) {
@@ -28,6 +30,14 @@ public class FavouriteHelper {
 
     public void setExId(String exId) {
         this.exId = exId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public FavouriteHelper() {

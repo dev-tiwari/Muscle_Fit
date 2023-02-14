@@ -54,8 +54,7 @@ public class ExerciseInformationActivity extends AppCompatActivity {
                         binding.infoName.setText(model.getExerciseName());
                         Glide.with(getApplicationContext()).load(model.getExerciseImage()).into(binding.informationImage);
                         binding.equipInformation.setText(model.getEquipmentsUsed());
-                        binding.calorieCount2.setText(model.getCalorieCount());
-                        binding.exTimeTaken2.setText(model.getTimeTaken());
+                        binding.des.setText(model.getDescription());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

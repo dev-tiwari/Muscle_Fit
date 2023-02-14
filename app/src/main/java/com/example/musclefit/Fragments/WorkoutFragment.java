@@ -242,7 +242,6 @@ public class WorkoutFragment extends Fragment {
                 Intent intent = new Intent(getContext(), ExploreAllWorkoutsActivity.class);
                 intent.putExtra("run", 0);
                 startActivity(intent);
-
             }
         });
 

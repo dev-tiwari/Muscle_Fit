@@ -14,6 +14,7 @@ import com.example.musclefit.User_Helper_Classes.FavouriteHelper;
 import com.example.musclefit.databinding.ActivityFavouritesBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,6 +39,12 @@ public class Favourites extends AppCompatActivity {
         dialog.setMessage("loading...");
         dialog.show();
         setContentView(binding.getRoot());
+
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), "Long Press to delete a Favourite.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });snackbar.show();
 
         ArrayList<FavouriteHelper> favouriteHelpers = new ArrayList<>();
         FavouritesAdapter adapter = new FavouritesAdapter(this, favouriteHelpers);
