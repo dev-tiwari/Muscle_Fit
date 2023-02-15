@@ -2,6 +2,7 @@ package com.example.musclefit.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.musclefit.Adapters.ExerciseAdapter;
+import com.example.musclefit.PlanSettingActivity;
 import com.example.musclefit.User_Helper_Classes.ExerciseModel;
 import com.example.musclefit.databinding.FragmentPlanBinding;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -115,6 +117,10 @@ public class PlanFragment extends Fragment {
 
         binding.reck230.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.reck230.setAdapter(k230dayAdapter);
+
+        binding.button.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), PlanSettingActivity.class));
+        });
 
         return binding.getRoot();
     }

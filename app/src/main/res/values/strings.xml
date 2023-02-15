@@ -21,4 +21,21 @@
     <string name="k3_adv">K3 Advanced</string>
     <string name="verified">Verified</string>
     <string name="not_verified">Not Verified</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="personalize">Personalize</string>
+    <string name="gender_">Gender :</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="not_specify">Not Specify</string>
+    <string name="personalize_">Personalize :</string>
+    <string name="build_muscles">Build Muscles</string>
+    <string name="to_be_more_active">To be More Active</string>
+    <string name="to_lose_weight">To Lose Weight</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
 </resources>

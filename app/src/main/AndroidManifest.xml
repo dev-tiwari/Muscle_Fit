@@ -17,6 +17,9 @@
         android:theme="@style/Theme.MuscleFit"
         tools:targetApi="31">
         <activity
+            android:name=".PlanSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.ExploreAllWorkoutsActivity"
             android:exported="false" />
         <activity
