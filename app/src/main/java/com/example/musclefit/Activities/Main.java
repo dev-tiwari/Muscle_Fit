@@ -1,13 +1,11 @@
 package com.example.musclefit.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.musclefit.Fragments.AccountFragment;
 import com.example.musclefit.Fragments.DashboardFragment;
@@ -15,13 +13,13 @@ import com.example.musclefit.Fragments.PlanFragment;
 import com.example.musclefit.Fragments.WorkoutFragment;
 import com.example.musclefit.R;
 import com.example.musclefit.databinding.ActivityMainBinding;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class Main extends AppCompatActivity {
 
     ActivityMainBinding binding;
     ProgressDialog dialog;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,60 +34,52 @@ public class Main extends AppCompatActivity {
         transaction.replace(binding.content.getId(), new DashboardFragment());
         transaction.commit();
 
-        binding.bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                switch (item.getItemId()) {
-                    case R.id.homeMain:
-                        transaction.replace(binding.content.getId(), new DashboardFragment());
-                        transaction.commit();
-                        break;
-                    case R.id.plan:
-                        transaction.replace(binding.content.getId(), new PlanFragment());
-                        transaction.commit();
-                        break;
-                    case R.id.workout:
-                        transaction.replace(binding.content.getId(), new WorkoutFragment());
-                        transaction.commit();
-                        break;
-                    case R.id.account:
-                        transaction.replace(binding.content.getId(), new AccountFragment());
-                        transaction.commit();
-                        break;
-                }
-                return true;
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
+            switch (item.getItemId()) {
+                case R.id.homeMain:
+                    transaction1.replace(binding.content.getId(), new DashboardFragment());
+                    transaction1.commit();
+                    break;
+                case R.id.plan:
+                    transaction1.replace(binding.content.getId(), new PlanFragment());
+                    transaction1.commit();
+                    break;
+                case R.id.workout:
+                    transaction1.replace(binding.content.getId(), new WorkoutFragment());
+                    transaction1.commit();
+                    break;
+                case R.id.account:
+                    transaction1.replace(binding.content.getId(), new AccountFragment());
+                    transaction1.commit();
+                    break;
             }
+            return true;
         });
 
-        binding.bottomNavigation.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                switch (item.getItemId()) {
-                    case R.id.homeMain:
-                        transaction.replace(binding.content.getId(), new DashboardFragment());
-                        transaction.commit();
-                                // To draw notification badge
-//                                BadgeDrawable badge = binding.bottomNavigation.getOrCreateBadge(R.id.homeMain);
-//                                badge.setVisible(true);
-//                                badge.setNumber(99);
-                        break;
-                    case R.id.plan:
-                        transaction.replace(binding.content.getId(), new PlanFragment());
-                        transaction.commit();
-                        break;
-                    case R.id.workout:
-                        transaction.replace(binding.content.getId(), new WorkoutFragment());
-                        transaction.commit();
-                        break;
-                    case R.id.account:
-                        transaction.replace(binding.content.getId(), new AccountFragment());
-                        transaction.commit();
-                        break;
-                }
+        binding.bottomNavigation.setOnItemReselectedListener(item -> {
+            FragmentTransaction transaction12 = getSupportFragmentManager().beginTransaction();
+            switch (item.getItemId()) {
+                case R.id.homeMain:
+                    transaction12.replace(binding.content.getId(), new DashboardFragment());
+                    transaction12.commit();
+                            /* To draw notification badge
+                                  BadgeDrawable badge = binding.bottomNavigation.getOrCreateBadge(R.id.homeMain);
+                                  badge.setVisible(true);
+                                  badge.setNumber(99);*/
+                    break;
+                case R.id.plan:
+                    transaction12.replace(binding.content.getId(), new PlanFragment());
+                    transaction12.commit();
+                    break;
+                case R.id.workout:
+                    transaction12.replace(binding.content.getId(), new WorkoutFragment());
+                    transaction12.commit();
+                    break;
+                case R.id.account:
+                    transaction12.replace(binding.content.getId(), new AccountFragment());
+                    transaction12.commit();
+                    break;
             }
         });
     }

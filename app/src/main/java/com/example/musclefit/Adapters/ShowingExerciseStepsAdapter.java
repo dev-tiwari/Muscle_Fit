@@ -42,7 +42,7 @@ public class ShowingExerciseStepsAdapter extends RecyclerView.Adapter<ShowingExe
         return showingExerciseStepsModels.size();
     }
 
-    public class ShowingExerciseStepsViewHolder extends RecyclerView.ViewHolder {
+    public static class ShowingExerciseStepsViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
 

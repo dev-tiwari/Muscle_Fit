@@ -1,14 +1,10 @@
 package com.example.musclefit.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
-import com.example.musclefit.Activities.Main;
-import com.example.musclefit.Activities.SignIn;
-import com.example.musclefit.Activities.SignUp;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.musclefit.databinding.ActivityStartPanelBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,22 +25,16 @@ public class StartPanel extends AppCompatActivity {
             finish();
             }
 
-        binding.signinbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), SignIn.class);
-                startActivity(i);
-                finish();
-            }
+        binding.signinbutton.setOnClickListener(view -> {
+            Intent i = new Intent(getApplicationContext(), SignIn.class);
+            startActivity(i);
+            finish();
         });
 
-        binding.signupbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), SignUp.class);
-                startActivity(i);
-                finish();
-            }
+        binding.signupbutton.setOnClickListener(view -> {
+            Intent i = new Intent(getApplicationContext(), SignUp.class);
+            startActivity(i);
+            finish();
         });
     }
 }

@@ -1,17 +1,13 @@
 package com.example.musclefit.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.musclefit.databinding.ActivitySettingsBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,61 +34,37 @@ public class Settings extends AppCompatActivity {
 
         binding.materialToolbar.setTitle("Settings");
 
-        binding.deleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.show();
-                String uid = auth.getCurrentUser().getUid();
-                Objects.requireNonNull(auth.getCurrentUser()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        dialog.dismiss();
-                        if (task.isSuccessful()) {
-                            database.collection("users")
-                                    .document(uid)
-                                    .delete()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(getApplicationContext(), "User Deleted!!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                            startActivity(new Intent(getApplicationContext(), StartPanel.class));
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
+        binding.deleteAccount.setOnClickListener(view -> {
+            dialog.show();
+            String uid = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+            Objects.requireNonNull(auth.getCurrentUser()).delete().addOnCompleteListener(task -> {
+                dialog.dismiss();
+                if (task.isSuccessful()) {
+                    database.collection("users")
+                            .document(uid)
+                            .delete()
+                            .addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "User Deleted!!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    startActivity(new Intent(getApplicationContext(), StartPanel.class));
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
-        binding.editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), EditProfile.class));
-            }
+        binding.editProfile.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), EditProfile.class)));
+
+        binding.resetPassword.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), ForgotPassword.class);
+            intent.putExtra("reset", 1);
+            startActivity(intent);
         });
 
-        binding.resetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ForgotPassword.class);
-                intent.putExtra("reset", 1);
-                startActivity(intent);
-            }
-        });
-
-        binding.updatePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), UpdatePassword.class));
-            }
-        });
-
-
+        binding.updatePassword.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), UpdatePassword.class)));
 
     }
 }

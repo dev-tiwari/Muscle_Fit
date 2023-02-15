@@ -16,4 +16,9 @@
     <string name="create_an_account">Create an account</string>
     <string name="sign_in">Sign In</string>
     <string name="set_to_favourites">Set to Favourites.</string>
+    <string name="k1_beg">K1 Beginner</string>
+    <string name="k2_int">K2 Intermediate</string>
+    <string name="k3_adv">K3 Advanced</string>
+    <string name="verified">Verified</string>
+    <string name="not_verified">Not Verified</string>
 </resources>

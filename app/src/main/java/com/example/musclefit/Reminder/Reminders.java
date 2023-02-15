@@ -2,11 +2,7 @@ package com.example.musclefit.Reminder;
 
 import static com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,20 +12,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.musclefit.databinding.ActivityRemindersBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
@@ -54,160 +46,124 @@ public class Reminders extends AppCompatActivity {
 
         dialog.show();
 
-        binding.select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialTimePicker picker =
-                        new MaterialTimePicker.Builder()
-                                .setTimeFormat(TimeFormat.CLOCK_12H)
-                                .setHour(12)
-                                .setMinute(00)
-                                .setTitleText("Select Reminder time")
-                                .build();
-                new MaterialTimePicker.Builder().setInputMode(INPUT_MODE_CLOCK);
-                picker.show(getSupportFragmentManager(), "tag");
+        binding.select.setOnClickListener(view -> {
+            MaterialTimePicker picker =
+                    new MaterialTimePicker.Builder()
+                            .setTimeFormat(TimeFormat.CLOCK_12H)
+                            .setHour(12)
+                            .setMinute(0)
+                            .setTitleText("Select Reminder time")
+                            .build();
+            new MaterialTimePicker.Builder().setInputMode(INPUT_MODE_CLOCK);
+            picker.show(getSupportFragmentManager(), "tag");
 
-                picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        formattedTime1 = formatTime(picker.getHour(), picker.getMinute());
-                        binding.textView16.setVisibility(View.VISIBLE);
-                        binding.textView16.setText(formattedTime1);
-                    }
-                });
+            picker.addOnPositiveButtonClickListener(view1 -> {
+                formattedTime1 = formatTime(picker.getHour(), picker.getMinute());
+                binding.textView16.setVisibility(View.VISIBLE);
+                binding.textView16.setText(formattedTime1);
+            });
+        });
+
+        binding.monday.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                selectedDays = selectedDays.replaceAll("Monday", "");
+            } else {
+                selectedDays = "Monday";
             }
         });
 
-        binding.monday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) {
-                    selectedDays = selectedDays.replaceAll("Monday", "");
-                } else {
-                    selectedDays = "Monday";
-                }
+        binding.tuesday.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                selectedDays = selectedDays.replaceAll(" Tuesday", "");
+            } else {
+                selectedDays = selectedDays + " Tuesday";
             }
         });
 
-        binding.tuesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) {
-                    selectedDays = selectedDays.replaceAll(" Tuesday", "");
-                } else {
-                    selectedDays = selectedDays + " Tuesday";
-                }
+        binding.wednesday.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                selectedDays = selectedDays.replaceAll(" Wednesday", "");
+            } else {
+                selectedDays = selectedDays + " Wednesday";
             }
         });
 
-        binding.wednesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) {
-                    selectedDays = selectedDays.replaceAll(" Wednesday", "");
-                } else {
-                    selectedDays = selectedDays + " Wednesday";
-                }
+        binding.thursday.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                selectedDays = selectedDays.replaceAll(" Thursday", "");
+            } else {
+                selectedDays = selectedDays + " Thursday";
             }
         });
 
-        binding.thursday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) {
-                    selectedDays = selectedDays.replaceAll(" Thursday", "");
-                } else {
-                    selectedDays = selectedDays + " Thursday";
-                }
+        binding.friday.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                selectedDays = selectedDays.replaceAll(" Friday", "");
+            } else {
+                selectedDays = selectedDays + " Friday";
             }
         });
 
-        binding.friday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) {
-                    selectedDays = selectedDays.replaceAll(" Friday", "");
-                } else {
-                    selectedDays = selectedDays + " Friday";
-                }
+        binding.saturday.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                selectedDays = selectedDays.replaceAll(" Saturday", "");
+            } else {
+                selectedDays = selectedDays + " Saturday";
             }
         });
 
-        binding.saturday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) {
-                    selectedDays = selectedDays.replaceAll(" Saturday", "");
-                } else {
-                    selectedDays = selectedDays + " Saturday";
-                }
+        binding.sunday.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (!b) {
+                selectedDays = selectedDays.replaceAll(" Sunday", "");
+            } else {
+                selectedDays = selectedDays + " Sunday";
             }
         });
 
-        binding.sunday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) {
-                    selectedDays = selectedDays.replaceAll(" Sunday", "");
-                } else {
-                    selectedDays = selectedDays + " Sunday";
-                }
-            }
-        });
+        binding.saveBtn.setOnClickListener(view -> {
+            dialog.show();
+            if (formattedTime1 == null) {
+                dialog.dismiss();
+                Toast.makeText(Reminders.this, "Please select the Time.", Toast.LENGTH_SHORT).show();
+            } else if (selectedDays == null || selectedDays.equals("")){
+                dialog.dismiss();
+                Toast.makeText(Reminders.this, "Please select the days for the Reminder.", Toast.LENGTH_SHORT).show();
+            } else {
+                ReminderAddition addition = new ReminderAddition(formattedTime1, selectedDays);
+                database.collection("users")
+                        .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                        .collection("reminder")
+                        .add(addition).addOnCompleteListener(task -> {
+                            dialog.dismiss();
+                            if (task.isSuccessful()) {
+                                long nowTime = System.currentTimeMillis();
+                                long tenSeconds = 1000 * 10;
 
-        binding.saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.show();
-                if (formattedTime1 == null) {
-                    dialog.dismiss();
-                    Toast.makeText(Reminders.this, "Please select the Time.", Toast.LENGTH_SHORT).show();
-                } else if (selectedDays == null || selectedDays.equals("")){
-                    dialog.dismiss();
-                    Toast.makeText(Reminders.this, "Please select the days for the Reminder.", Toast.LENGTH_SHORT).show();
-                } else {
-                    ReminderAddition addition = new ReminderAddition(formattedTime1, selectedDays);
-                    database.collection("users")
-                            .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
-                            .collection("reminder")
-                            .add(addition).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentReference> task) {
-                                    dialog.dismiss();
-                                    if (task.isSuccessful()) {
-                                        long nowTime = System.currentTimeMillis();
-                                        long tenSeconds = 1000 * 10;
+                                Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
+                                @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
 
-                                        Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
-                                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+                                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                alarmManager.set(AlarmManager.RTC_WAKEUP, nowTime+tenSeconds, pendingIntent);
 
-                                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                        alarmManager.set(AlarmManager.RTC_WAKEUP, nowTime+tenSeconds, pendingIntent);
-
-                                        Toast.makeText(Reminders.this, "Successfully Added.", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(Reminders.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
+                                Toast.makeText(Reminders.this, "Successfully Added.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Reminders.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
 
         database.collection("users")
                         .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                                 .collection("reminder")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        dialog.dismiss();
-                        assert value != null;
-                        if (!value.isEmpty()) {
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(binding.con.getId(), new ReminderShowingFragment());
-                            transaction.commit();
-                            allInvisible();
-                        }
+                .addSnapshotListener((value, error) -> {
+                    dialog.dismiss();
+                    assert value != null;
+                    if (!value.isEmpty()) {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(binding.con.getId(), new ReminderShowingFragment());
+                        transaction.commit();
+                        allInvisible();
                     }
                 });
 

@@ -1,8 +1,8 @@
 package com.example.musclefit.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,21 +15,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.musclefit.Activities.WorkoutInformationActivity;
+import com.example.musclefit.R;
 import com.example.musclefit.User_Helper_Classes.ExerciseModel;
 import com.example.musclefit.User_Helper_Classes.FavHelper;
 import com.example.musclefit.User_Helper_Classes.FavouriteHelper;
-import com.example.musclefit.R;
-import com.example.musclefit.Activities.WorkoutInformationActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -38,6 +32,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
     Context context;
     ArrayList<ExerciseModel> exerciseModels;
+    int viewing;
     ProgressDialog dialog;
     FirebaseFirestore database;
     FirebaseAuth auth;
@@ -47,10 +42,16 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         this.exerciseModels = exerciseModels;
     }
 
+    public ExerciseAdapter(Context context, ArrayList<ExerciseModel> exerciseModels, int viewing) {
+        this.context = context;
+        this.exerciseModels = exerciseModels;
+        this.viewing = viewing;
+    }
+
     @NonNull
     @Override
     public ExerciseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.exercise_showing_layout, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(R.layout.exercise_showing_layout, null);
         return new ExerciseViewHolder(view);
     }
 
@@ -62,96 +63,98 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         dialog = new ProgressDialog(context);
         dialog.setMessage("Just a Minute...");
 
-        holder.exName.setText(model.getExerciseName());
-        holder.timeTaken.setText(model.getTimeTaken());
+        if (viewing == 1){
+            holder.exName.setText(model.getExerciseName());
+            holder.timeTaken.setText(model.getTimeTaken());
 
-        if (model.getState() != null) {
-            switch (model.getState()) {
-                case "K1":
-                    holder.state.setText("K1 Beginner");
-                    break;
-                case "K2":
-                    holder.state.setText("K2 Intermediate");
-                    break;
-                case "K3":
-                    holder.state.setText("K3 Advanced");
-                    break;
+            if (model.getExerciseType() != null) {
+                if (model.getExerciseType().contains("k1")) {
+                    holder.state.setText(R.string.k1_beg);
+                } else if (model.getExerciseType().contains("k2")) {
+                    holder.state.setText(R.string.k2_int);
+                } else if (model.getExerciseType().contains("k3")) {
+                    holder.state.setText(R.string.k3_adv);
+                }
+            } else {
+                holder.state.setVisibility(View.INVISIBLE);
+                holder.space.setVisibility(View.INVISIBLE);
             }
+
+            Glide.with(context).load(model.getExerciseImage()).into(holder.image);
+
         } else {
-            holder.state.setVisibility(View.INVISIBLE);
-        }
+            holder.exName.setText(model.getExerciseName());
+            holder.timeTaken.setText(model.getTimeTaken());
 
-        Glide.with(context).load(model.getExerciseImage()).into(holder.image);
+            if (model.getState() != null) {
+                switch (model.getState()) {
+                    case "K1":
+                        holder.state.setText(R.string.k1_beg);
+                        break;
+                    case "K2":
+                        holder.state.setText(R.string.k2_int);
+                        break;
+                    case "K3":
+                        holder.state.setText(R.string.k3_adv);
+                        break;
+                }
+            } else {
+                holder.state.setVisibility(View.INVISIBLE);
+                holder.space.setVisibility(View.INVISIBLE);
+            }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            Glide.with(context).load(model.getExerciseImage()).into(holder.image);
+
+            holder.itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, WorkoutInformationActivity.class);
                 intent.putExtra("exId", model.getExerciseId());
                 context.startActivity(intent);
-            }
-        });
+            });
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
+            holder.itemView.setOnLongClickListener(view -> {
                 new MaterialAlertDialogBuilder(context)
                         .setTitle("Favourites")
                         .setMessage("Add to Favourites. The workout will be added to favourites.")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                final boolean[] flag = {true};
-                                dialog.show();
-                                database.collection("users")
-                                        .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
-                                        .collection("favourites")
-                                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                dialog.dismiss();
-                                                for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                                    FavouriteHelper help = snapshot.toObject(FavouriteHelper.class);
-                                                    if (model.getExerciseId().equals(help.getExId())){
-                                                        Toast.makeText(context, "Already in Favourites.", Toast.LENGTH_SHORT).show();
-                                                        flag[0] = false;
-                                                        break;
-                                                    }
-                                                }
-                                                if (flag[0]) {
-                                                    FavHelper helper = new FavHelper(model.getExerciseId());
-                                                    database.collection("users")
-                                                            .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
-                                                            .collection("favourites")
-                                                            .add(helper).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<DocumentReference> task) {
-                                                                    dialog.dismiss();
-                                                                    if (task.isSuccessful()) {
-                                                                        Toast.makeText(context, "Successfully Added to Favourites.", Toast.LENGTH_SHORT).show();
-                                                                    } else {
-                                                                        Toast.makeText(context, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                }
-                                                            });
-                                                }
+                        .setPositiveButton("Yes", (dialogInterface, i) -> {
+                            final boolean[] flag = {true};
+                            dialog.show();
+                            database.collection("users")
+                                    .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                                    .collection("favourites")
+                                    .get().addOnSuccessListener(queryDocumentSnapshots -> {
+                                        dialog.dismiss();
+                                        for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                            FavouriteHelper help = snapshot.toObject(FavouriteHelper.class);
+                                            assert help != null;
+                                            if (model.getExerciseId().equals(help.getExId())) {
+                                                Toast.makeText(context, "Already in Favourites.", Toast.LENGTH_SHORT).show();
+                                                flag[0] = false;
+                                                break;
                                             }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                dialog.dismiss();
-                                                Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                            }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
+                                        }
+                                        if (flag[0]) {
+                                            FavHelper helper = new FavHelper(model.getExerciseId());
+                                            database.collection("users")
+                                                    .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                                                    .collection("favourites")
+                                                    .add(helper).addOnCompleteListener(task -> {
+                                                        dialog.dismiss();
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(context, "Successfully Added to Favourites.", Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(context, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                        }
+                                    }).addOnFailureListener(e -> {
+                                        dialog.dismiss();
+                                        Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                        }).setNegativeButton("No", (dialogInterface, i) -> {
                         }).setIcon(R.drawable.favourites).show();
                 return true;
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -159,12 +162,14 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         return exerciseModels.size();
     }
 
-    public class ExerciseViewHolder extends RecyclerView.ViewHolder {
+    public static class ExerciseViewHolder extends RecyclerView.ViewHolder {
 
         ImageView image;
         TextView exName;
         TextView timeTaken;
         TextView state;
+        TextView space;
+
 
         public ExerciseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -172,6 +177,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
             exName = itemView.findViewById(R.id.exName);
             timeTaken = itemView.findViewById(R.id.timeTaken);
             state = itemView.findViewById(R.id.exState);
+            space = itemView.findViewById(R.id.textView29);
         }
     }
 

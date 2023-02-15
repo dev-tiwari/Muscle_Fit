@@ -14,12 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.musclefit.Activities.ExerciseInformationActivity;
-import com.example.musclefit.User_Helper_Classes.ExerciseModel;
 import com.example.musclefit.R;
+import com.example.musclefit.User_Helper_Classes.ExerciseModel;
 import com.example.musclefit.User_Helper_Classes.WorkoutListHelper;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -51,30 +48,20 @@ public class DoingExerciseAdapter extends RecyclerView.Adapter<DoingExerciseAdap
 
         database.collection("workoutsList")
                         .document(id)
-                                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        ExerciseModel mode = documentSnapshot.toObject(ExerciseModel.class);
-                        holder.exName.setText(mode.getExerciseName());
-                        holder.time.setText(mode.getTimeTaken());
-                        holder.equip.setText(mode.getEquipmentsUsed());
-                        Glide.with(context).load(mode.getExerciseImage()).into(holder.image);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                                .get().addOnSuccessListener(documentSnapshot -> {
+                                    ExerciseModel mode = documentSnapshot.toObject(ExerciseModel.class);
+                                    assert mode != null;
+                                    holder.exName.setText(mode.getExerciseName());
+                                    holder.time.setText(mode.getTimeTaken());
+                                    holder.equip.setText(mode.getEquipmentsUsed());
+                                    Glide.with(context).load(mode.getExerciseImage()).into(holder.image);
+                                }).addOnFailureListener(e -> Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ExerciseInformationActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("id", id);
-                context.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ExerciseInformationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("id", id);
+            context.startActivity(intent);
         });
     }
 
@@ -83,7 +70,7 @@ public class DoingExerciseAdapter extends RecyclerView.Adapter<DoingExerciseAdap
         return workoutModels.size();
     }
 
-    public class DoingExerciseViewHolder extends RecyclerView.ViewHolder {
+    public static class DoingExerciseViewHolder extends RecyclerView.ViewHolder {
 
         ImageView image;
         TextView exName;

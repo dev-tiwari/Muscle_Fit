@@ -1,23 +1,19 @@
 package com.example.musclefit.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.musclefit.Adapters.ExerciseAdapter;
 import com.example.musclefit.Adapters.ExerciseLibraryAdapter;
 import com.example.musclefit.User_Helper_Classes.ExerciseModel;
 import com.example.musclefit.databinding.ActivityExploreAllWorkoutsBinding;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -28,6 +24,7 @@ public class ExploreAllWorkoutsActivity extends AppCompatActivity {
     ProgressDialog dialog;
     int run;
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,54 +61,49 @@ public class ExploreAllWorkoutsActivity extends AppCompatActivity {
             ExerciseAdapter otherAdapter = new ExerciseAdapter(this, other);
 
             database.collection("exercises")
-                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            dialog.dismiss();
-                            fatBurning.clear();
-                            abs.clear();
-                            chest.clear();
-                            legs.clear();
-                            arms.clear();
-                            back.clear();
-                            shoulder.clear();
-                            other.clear();
-                            for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                ExerciseModel model = snapshot.toObject(ExerciseModel.class);
-                                model.setExerciseId(snapshot.getId());
-                                if (model.getExerciseType().contains("fat burning")) {
-                                    fatBurning.add(model);
-                                } else if (model.getExerciseType().contains("abs")) {
-                                    abs.add(model);
-                                } else if (model.getExerciseType().contains("chest")) {
-                                    chest.add(model);
-                                } else if (model.getExerciseType().contains("legs")) {
-                                    legs.add(model);
-                                } else if (model.getExerciseType().contains("arms")) {
-                                    arms.add(model);
-                                } else if (model.getExerciseType().contains("back")) {
-                                    back.add(model);
-                                } else if (model.getExerciseType().contains("shoulder")) {
-                                    shoulder.add(model);
-                                } else {
-                                    other.add(model);
-                                }
-                                fatAdapter.notifyDataSetChanged();
-                                absAdapter.notifyDataSetChanged();
-                                chestAdapter.notifyDataSetChanged();
-                                legsAdapter.notifyDataSetChanged();
-                                armsAdapter.notifyDataSetChanged();
-                                backAdapter.notifyDataSetChanged();
-                                shoulderAdapter.notifyDataSetChanged();
-                                otherAdapter.notifyDataSetChanged();
+                    .get().addOnSuccessListener(queryDocumentSnapshots -> {
+                        dialog.dismiss();
+                        fatBurning.clear();
+                        abs.clear();
+                        chest.clear();
+                        legs.clear();
+                        arms.clear();
+                        back.clear();
+                        shoulder.clear();
+                        other.clear();
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                            ExerciseModel model = snapshot.toObject(ExerciseModel.class);
+                            assert model != null;
+                            model.setExerciseId(snapshot.getId());
+                            if (model.getExerciseType().contains("fat burning")) {
+                                fatBurning.add(model);
+                            } else if (model.getExerciseType().contains("abs")) {
+                                abs.add(model);
+                            } else if (model.getExerciseType().contains("chest")) {
+                                chest.add(model);
+                            } else if (model.getExerciseType().contains("legs")) {
+                                legs.add(model);
+                            } else if (model.getExerciseType().contains("arms")) {
+                                arms.add(model);
+                            } else if (model.getExerciseType().contains("back")) {
+                                back.add(model);
+                            } else if (model.getExerciseType().contains("shoulder")) {
+                                shoulder.add(model);
+                            } else {
+                                other.add(model);
                             }
+                            fatAdapter.notifyDataSetChanged();
+                            absAdapter.notifyDataSetChanged();
+                            chestAdapter.notifyDataSetChanged();
+                            legsAdapter.notifyDataSetChanged();
+                            armsAdapter.notifyDataSetChanged();
+                            backAdapter.notifyDataSetChanged();
+                            shoulderAdapter.notifyDataSetChanged();
+                            otherAdapter.notifyDataSetChanged();
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            dialog.dismiss();
-                            Toast.makeText(ExploreAllWorkoutsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    }).addOnFailureListener(e -> {
+                        dialog.dismiss();
+                        Toast.makeText(ExploreAllWorkoutsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     });
 
             binding.fatWorkouts.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -161,54 +153,49 @@ public class ExploreAllWorkoutsActivity extends AppCompatActivity {
             ExerciseLibraryAdapter otherAdapter = new ExerciseLibraryAdapter(this, other);
 
             database.collection("workoutsList")
-                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            dialog.dismiss();
-                            fatBurning.clear();
-                            abs.clear();
-                            chest.clear();
-                            legs.clear();
-                            arms.clear();
-                            back.clear();
-                            shoulder.clear();
-                            other.clear();
-                            for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                ExerciseModel model = snapshot.toObject(ExerciseModel.class);
-                                model.setExerciseId(snapshot.getId());
-                                if (model.getExerciseType().contains("fat burning")) {
-                                    fatBurning.add(model);
-                                } else if (model.getExerciseType().contains("abs")) {
-                                    abs.add(model);
-                                } else if (model.getExerciseType().contains("chest")) {
-                                    chest.add(model);
-                                } else if (model.getExerciseType().contains("legs")) {
-                                    legs.add(model);
-                                } else if (model.getExerciseType().contains("arms")) {
-                                    arms.add(model);
-                                } else if (model.getExerciseType().contains("back")) {
-                                    back.add(model);
-                                } else if (model.getExerciseType().contains("shoulder")) {
-                                    shoulder.add(model);
-                                } else {
-                                    other.add(model);
-                                }
-                                fatAdapter.notifyDataSetChanged();
-                                absAdapter.notifyDataSetChanged();
-                                chestAdapter.notifyDataSetChanged();
-                                legsAdapter.notifyDataSetChanged();
-                                armsAdapter.notifyDataSetChanged();
-                                backAdapter.notifyDataSetChanged();
-                                shoulderAdapter.notifyDataSetChanged();
-                                otherAdapter.notifyDataSetChanged();
+                    .get().addOnSuccessListener(queryDocumentSnapshots -> {
+                        dialog.dismiss();
+                        fatBurning.clear();
+                        abs.clear();
+                        chest.clear();
+                        legs.clear();
+                        arms.clear();
+                        back.clear();
+                        shoulder.clear();
+                        other.clear();
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                            ExerciseModel model = snapshot.toObject(ExerciseModel.class);
+                            assert model != null;
+                            model.setExerciseId(snapshot.getId());
+                            if (model.getExerciseType().contains("fat burning")) {
+                                fatBurning.add(model);
+                            } else if (model.getExerciseType().contains("abs")) {
+                                abs.add(model);
+                            } else if (model.getExerciseType().contains("chest")) {
+                                chest.add(model);
+                            } else if (model.getExerciseType().contains("legs")) {
+                                legs.add(model);
+                            } else if (model.getExerciseType().contains("arms")) {
+                                arms.add(model);
+                            } else if (model.getExerciseType().contains("back")) {
+                                back.add(model);
+                            } else if (model.getExerciseType().contains("shoulder")) {
+                                shoulder.add(model);
+                            } else {
+                                other.add(model);
                             }
+                            fatAdapter.notifyDataSetChanged();
+                            absAdapter.notifyDataSetChanged();
+                            chestAdapter.notifyDataSetChanged();
+                            legsAdapter.notifyDataSetChanged();
+                            armsAdapter.notifyDataSetChanged();
+                            backAdapter.notifyDataSetChanged();
+                            shoulderAdapter.notifyDataSetChanged();
+                            otherAdapter.notifyDataSetChanged();
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            dialog.dismiss();
-                            Toast.makeText(ExploreAllWorkoutsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    }).addOnFailureListener(e -> {
+                        dialog.dismiss();
+                        Toast.makeText(ExploreAllWorkoutsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     });
 
             binding.fatWorkouts.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));

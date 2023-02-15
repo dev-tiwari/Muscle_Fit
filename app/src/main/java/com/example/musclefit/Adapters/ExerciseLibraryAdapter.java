@@ -43,14 +43,11 @@ public class ExerciseLibraryAdapter extends RecyclerView.Adapter<ExerciseLibrary
         holder.time.setText(model.getTimeTaken());
         Glide.with(context).load(model.getExerciseImage()).into(holder.image);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ExerciseInformationActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("id", model.getExerciseId());
-                context.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ExerciseInformationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("id", model.getExerciseId());
+            context.startActivity(intent);
         });
     }
 
@@ -59,7 +56,7 @@ public class ExerciseLibraryAdapter extends RecyclerView.Adapter<ExerciseLibrary
         return exerciseModels.size();
     }
 
-    public class ExerciseLibraryViewHolder extends RecyclerView.ViewHolder {
+    public static class ExerciseLibraryViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
         TextView time;
